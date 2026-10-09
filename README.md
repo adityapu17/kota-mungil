@@ -1,13 +1,24 @@
 # Kota Mungil 3D 🏡
 
-Game web 3D ala The Sims: kota kecil, NPC otomatis, waktu/cuaca dinamis, uang, masuk gedung, aksi beranimasi.
+Game web 3D ala The Sims: kota kecil, NPC otomatis, waktu/cuaca dinamis, uang, masuk gedung, aksi beranimasi, akun + save game.
 
-- Satu file: `index.html` (Three.js r128 dari cdnjs)
-- Tanpa build, tanpa dependensi lokal
-- Main dalam mode landscape
+## Struktur
+- `index.html` — seluruh game (Three.js r128 dari cdnjs)
+- `functions/api/[[path]].js` — API akun & save (Cloudflare Pages Function + D1)
+- `schema.sql` — skema database D1 (opsional, tabel juga dibuat otomatis)
 
-## Jalankan lokal
-Buka `index.html` di browser, atau `npx serve .`
+## Deploy ke Cloudflare Pages
+1. Push repo ke GitHub.
+2. Cloudflare → Workers & Pages → Create → Pages → Connect to Git → pilih repo. Build command kosong, output directory `/`.
+3. Cloudflare → Storage & Databases → D1 → Create database (nama bebas, mis. `kota-mungil-db`).
+4. Project Pages → Settings → Bindings → Add → D1 database → Variable name **`DB`** → pilih database tadi.
+5. Deploy ulang (Deployments → Retry deployment / push commit baru).
 
-## Deploy
-Cloudflare Pages → Connect to Git → Build command: kosong → Output directory: `/`
+Tanpa binding `DB`, game otomatis jalan di **mode lokal** (akun & save disimpan di browser).
+
+## API
+- `POST /api/register` `{username,password}` → 200 `{token}` | 409 `username_taken`
+- `POST /api/login` → 200 `{token}` | 401
+- `POST /api/save` `{token,data}` · `POST /api/load` `{token}`
+
+Password di-hash PBKDF2-SHA256 (100k iterasi + salt) di server; tidak pernah disimpan polos.
