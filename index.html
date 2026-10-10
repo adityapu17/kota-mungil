@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Kota Mungil 3D</title>
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#8fc7c1"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Kota Mungil 3D</title>
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#cfe9e4}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#17211f}}
@@ -78,14 +78,15 @@ button:disabled{background:#c9cfd0;color:#888}
 #ld{background:linear-gradient(#0000002a,#00000055),var(--spl) center/cover no-repeat #cfe9e4!important}
 #ld .lt{color:#fff;text-shadow:0 .08em .4em #0009}#ltip{color:#fff;text-shadow:0 .06em .3em #0009;opacity:1}#lbar{background:#ffffffaa}
 #sbl{color:#fff;font-weight:800;font-size:1.15em;text-shadow:0 .08em .35em #000a;margin-bottom:.35em}#spl .ver{color:#fffb}
+#fss{position:absolute;right:.7em;top:.6em;z-index:9;padding:.3em .6em;font-size:1.1em;border-radius:.7em;background:#2d3b3acc}#fsn{position:absolute;left:50%;top:3.2em;transform:translateX(-50%);z-index:9;background:#2d3b3af2;color:#fff;border-radius:1em;padding:.4em 1em;font-weight:700;max-width:70%;text-align:center}
 #rot{display:none;position:fixed;inset:0;background:#2d3b3a;color:#fff;font-size:1.4em;align-items:center;justify-content:center;text-align:center;z-index:9}
 @media(orientation:portrait){#rot{display:flex}}
 </style></head><body>
 <div id="g"><div id="bgc"></div><canvas id="cv"></canvas><div id="vg"></div>
-<div id="hud" hidden><div class="p" id="nd"></div><div class="p" id="tm"></div><div class="p" id="mw"><span id="mo"></span></div><div class="p" id="mn"><button id="sp">⏩</button><button id="zm">🔭</button><button id="mu">🔊</button><button id="mb">☰</button></div><div class="p" id="mmw"><canvas id="mm" width="204" height="150"></canvas></div></div>
+<div id="hud" hidden><div class="p" id="nd"></div><div class="p" id="tm"></div><div class="p" id="mw"><span id="mo"></span></div><div class="p" id="mn"><button id="sp">⏩</button><button id="zm">🔭</button><button id="mu">🔊</button><button id="fsb" title="Layar penuh (F)">⛶</button><button id="mb">☰</button></div><div class="p" id="mmw"><canvas id="mm" width="204" height="150"></canvas></div></div>
 <div id="toast"></div><div id="hint" hidden></div><div id="fd"></div>
 <div id="fm" hidden><div class="fh"><b>🗺️ Peta Kota</b><small> tap bangunan untuk menuju ke sana · tekan M untuk menutup</small><button id="fx">✕</button></div><canvas id="fmc"></canvas></div>
-<div id="spl"><div class="top"></div><div class="bot"><div id="sbl">Memuat Data…</div><div id="sbar"><i></i></div><div id="sbt" hidden><button id="bn">▶ Game Baru</button><button id="bl">📂 Lanjutkan</button></div></div><div class="ver">v1.0</div>
+<div id="spl"><div class="top"></div><div class="bot"><div id="sbl">Memuat Data…</div><div id="sbar"><i></i></div><div id="sbt" hidden><button id="bn">▶ Game Baru</button><button id="bl">📂 Lanjutkan</button></div></div><button id="fss" title="Layar penuh">⛶</button><div id="fsn" hidden></div><div class="ver">v1.0</div>
 <div id="af" hidden><h2 id="aft">Game Baru</h2><label>Username</label><input id="au" maxlength="16" autocomplete="off" placeholder="3-16 huruf, angka, atau _"><label>Password</label><input id="ap" type="password" maxlength="40" placeholder="minimal 4 karakter"><div id="am"></div><div class="row"><button id="as">Lanjut</button><button id="ab" class="gy">Kembali</button></div><div id="ai"></div></div></div>
 <div id="ld" hidden><div class="lt">Menyiapkan kota…</div><div id="lbar"><i></i></div><div id="ltip"></div></div>
 <div id="mnu" hidden><div class="mc"><h2>⚙️ Menu</h2><div id="stc"></div><div id="mqc" hidden><p>Simpan progres sebelum keluar?</p><div class="row"><button id="mqs">💾 Simpan &amp; Keluar</button><button id="mqn" class="rd">Keluar tanpa simpan</button><button id="mqb" class="gy">Batal</button></div></div><div class="row"><button id="msv">💾 Simpan</button><button id="mq" class="rd">🚪 Keluar Game</button><button id="mcl" class="gn">▶ Lanjutkan</button></div></div></div>
@@ -420,15 +421,15 @@ miskin:['Dompetmu tipis ya? Coba kerja dulu.','Cari duit di Kebun atau Toko aja.
 jokes:['Kenapa ayam nyeberang jalan? Biar sampai seberang!','Aku lagi diet, tapi diet-nya besok.','Kalau capek, ingat: ada kasur.','Cinta itu buta, makanya aku pakai kacamata.','Uang bukan segalanya, tapi segalanya butuh uang.'],
 akrab:['Eh, ketemu lagi! Kita udah akrab ya.','Senang deh ngobrol sama kamu.','Kamu temen yang asik!'],sahabat:['Kamu sahabat terbaikku di kota ini!','Kalau ada apa-apa, bilang aja ya.','Aku seneng banget kamu pindah ke sini.'],
 tips:{rumah:'Tidur di Rumah itu cara paling ampuh isi energi.',kafe:'Kopi di Kafe bikin melek seharian.',warung:'Warung jual nasi goreng murah, Rp15rb aja.',toko:'Di Toko kamu bisa jaga kasir buat nambah uang saku.',kantor:'Gaji Kantor lumayan, tapi libur Sabtu-Minggu.',perpus:'Belajar di Pustaka naikin skill, gaji Kantor ikut naik.',gym:'Gym bikin senang, tapi keringetan banget.',renang:'Kolam Renang segar, tapi tutup kalau hujan.',taman:'Memancing di Taman bisa dapat uang lho.',bioskop:'Bioskop buka siang sampai tengah malam.',arcade:'Turnamen Arcade bisa bawa pulang uang, kadang zonk.',salon:'Habis dari Salon pasti mood naik.',resto:'Steak di Resto mahal, tapi kenyangnya awet.',spa:'Pijat di Klinik bikin energi balik penuh.',kebun:'Di Kebun kamu bisa dapat uang dari panen sayur.',butik:'Butik cocok buat nyenengin diri.',pasar:'Pasar paling ramai pagi hari, tutup sore.'}};
-function say(n){S.fr=S.fr||{};const f=S.fr[n.n]=(S.fr[n.n]||0)+1,d=NPD[n.n],h=S.t/60,nd=S.nd,pool=[],add=(a,w=1)=>{for(let i=0;i<w;i++)pool.push(...(Array.isArray(a)?a:[a]))};
+function say(n){S.fr=S.fr||{};const f=addFr(n.n,1),d=NPD[n.n],h=S.t/60,nd=S.nd,pool=[],add=(a,w=1)=>{for(let i=0;i<w;i++)pool.push(...(Array.isArray(a)?a:[a]))};
 if(f==1)return d.i;
 add(d.l,3);add(GEN[S.w]);add(h<10?GEN.pagi:h<15?GEN.siang:h<18?GEN.sore:h<22?GEN.malam:GEN.larut,2);add(S.day%7>=5?GEN.wkend:GEN.wkday);
 if(nd.k<35)add(GEN.lapar,3);if(nd.e<30)add(GEN.capek,3);if(nd.s<30)add(GEN.bosan,3);if(nd.b<30)add(GEN.kotor,3);if((S.money||0)<30)add(GEN.miskin,3);if(S.money>500)add(GEN.kaya,3);
 add(GEN.jokes);add(GEN.tips[B[rnd(B.length)].id],2);const o=NP.filter(x=>x!=n&&x.dn);if(o.length){const q=o[rnd(o.length)];add(`Tadi aku lihat ${q.n} lagi ke ${q.dn}.`,2)}
-if(f>=4)add(GEN.akrab,2);if(f>=8)add(GEN.sahabat,3);
+if(friendLv(n.n)>=3)add(GEN.akrab,2);if(friendLv(n.n)>=4)add(GEN.sahabat,3);
 let l;do l=pool[rnd(pool.length)];while(l===n.last&&pool.length>1);n.last=l;
 if(f%6==0){const g=10+rnd(21);S.money+=g;SFX.coin();l+=` (💝 ${n.n} memberimu Rp${g}rb!)`}return l}
-function lab(n){const k=n.ic&&n.mv?n.ic:'';if(n.lk===k)return;n.lk=k;const c=n.lc.getContext('2d');c.clearRect(0,0,256,128);if(k){c.font='46px system-ui';c.textAlign='center';c.fillText(k,128,46)}c.font='bold 30px system-ui';c.textAlign='center';c.strokeStyle='#0008';c.lineWidth=5;c.strokeText(n.n,128,100);c.fillStyle='#fff';c.fillText(n.n,128,100);n.lt.needsUpdate=true}
+function lab(n){const bf=friendLv(n.n)>=4,em=n.ic&&n.mv?n.ic:'',k=em+(bf?'#':'');if(n.lk===k)return;n.lk=k;const c=n.lc.getContext('2d');c.clearRect(0,0,256,128);if(em){c.font='46px system-ui';c.textAlign='center';c.fillText(em,128,46)}c.font='bold 30px system-ui';c.textAlign='center';c.strokeStyle='#0008';c.lineWidth=5;const t=n.n+(bf?' 💖':'');c.strokeText(t,128,100);c.fillStyle='#fff';c.fillText(t,128,100);n.lt.needsUpdate=true}
 const abs=()=>S.day*1440+S.t,isOpen=b=>{const h=S.t/60;return h>=b.o[0]&&h<b.o[1]&&!(b.wk&&S.day%7>=5)&&!(b.out&&S.w=='hujan')};
 function mover(e,dt){e.mv=0;if(!e.p||!e.p.length)return;const n=e.p[0],dx=n[0]-e.x,dy=n[1]-e.y,d=Math.hypot(dx,dy),sp=e.sp*dt*(e.slow?.6:1);e.mv=1;
 if(d<=sp){e.x=n[0];e.y=n[1];e.p.shift();if(!e.p.length){const a=e.arrive;e.arrive=null;a&&a()}}else{e.x+=dx/d*sp;e.y+=dy/d*sp}
@@ -507,7 +508,7 @@ pr.position.set(P.x+.5,0,P.y+.5);pr.rotation.y=yaw;pr.scale.setScalar(.85);sc.ad
 busy={a,b,k,d,pr,t:0,acc:0,left:a[3],cy:-1,em:a[1],pl:{},ang:0,post:null,fs:0,f0:0,
  w:(x,y,z)=>pr.localToWorld(V(x,y,z))};P.ang=yaw;if(d.init)d.init(busy);savedZ=tdist;tdist=8.5;SFX[a[6]]&&SFX[a[6]]()}
 function finishAct(){const c=busy,[l,em,cost,mins,fx,earn]=c.a;tick(Math.max(0,c.left));
-let gain=earn==-1?10+rnd(51):earn==-2?rnd(91):earn==-3?rnd(221):earn;if(c.b.id=='kantor')gain=Math.round(gain*(1+(S.skill||0)/200));S.money+=gain;(S.stat=S.stat||{earn:0,spent:0,acts:0,talks:0});S.stat.earn+=gain;S.stat.acts++;if(c.b.owner){S.fr=S.fr||{};S.fr[c.b.owner]=(S.fr[c.b.owner]||0)+2}
+let gain=earn==-1?10+rnd(51):earn==-2?rnd(91):earn==-3?rnd(221):earn;if(c.b.id=='kantor')gain=Math.round(gain*(1+(S.skill||0)/200));S.money+=gain;(S.stat=S.stat||{earn:0,spent:0,acts:0,talks:0});S.stat.earn+=gain;S.stat.acts++;if(c.b.owner)addFr(c.b.owner,2);
 for(const k in fx){if(k=='sk')S.skill=Math.min(100,(S.skill||0)+fx[k]);else S.nd[k]+=(k=='e'&&fx[k]<0?fx[k]*.5:fx[k])}clamp();if(gain)SFX.coin();
 toast(`${em} ${l}${cost?' −Rp'+cost+'rb':''}${gain?' +Rp'+gain+'rb':''}`);sc.remove(c.pr);tdist=savedZ;busy=null;modal=0;menu()}
 function updAct(dt){const c=busy;c.t+=dt;c.acc+=c.a[3]*dt/c.d.d;const n=Math.floor(c.acc);if(n>0){tick(n);c.acc-=n;c.left-=n}
@@ -634,7 +635,7 @@ function beginGame(){try{document.activeElement&&document.activeElement.blur()}c
 setTimeout(()=>{try{town.visible=true;R.compile(sc,cam)}catch(e){}start();const f=()=>{if(p>=100){clearInterval(iv);setTimeout(()=>{ld.hidden=true;toast('Selamat datang, '+(ACC?ACC.user:'')+'! 🏡')},250)}else setTimeout(f,100)};f()},150)}
 // menu & stat
 function statHTML(){const h=S.t/60|0,m=S.t%60,nd=S.nd,st=S.stat||{},bar=(e,l,v,c)=>`<div class="sr"><span>${e} ${l}</span><u><i style="width:${Math.round(v)}%;background:${c}"></i></u><b>${Math.round(v)}%</b></div>`,col=v=>v>50?'#6fcf7a':v>25?'#f0c040':'#e8626a',
-fr=Object.entries(S.fr||{}).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([n,v])=>`<li>${n} ${v>=8?'💖':v>=4?'💛':'🙂'} <small>(${v}x ngobrol)</small></li>`).join('')||'<li>Belum ada</li>',lk=S.look||{};
+fr=Object.entries(S.fr||{}).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([n,v])=>`<li>${n} ${friendTag(n)} <small>Lv ${friendLv(n)} · ${v} poin${friendLv(n)<5?' (lv berikut '+FLV[friendLv(n)+1]+')':' (maks)'}</small></li>`).join('')||'<li>Belum ada</li>',lk=S.look||{};
 return`<div class="sg"><div class="sc"><b>👤 ${ACC?ACC.user:'-'}</b><small>${lk.g=='f'?'Cewek':'Cowok'} · Hari ke-${S.day+1} (${DN[S.day%7]}) · ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}</small><span class="chips"><i style="background:${lk.hair}"></i><i style="background:${lk.shirt}"></i><i style="background:${lk.pants}"></i></span></div>
 <div>💰 Uang: <b>Rp${fm(S.money)}</b></div><div>📚 Skill: <b>${S.skill||0}</b></div><div>📈 Total pendapatan: <b>Rp${st.earn?fm(st.earn):'0'}</b></div><div>🛍️ Total pengeluaran: <b>Rp${st.spent?fm(st.spent):'0'}</b></div><div>🎬 Aktivitas: <b>${st.acts||0}x</b></div><div>💬 Ngobrol: <b>${st.talks||0}x</b></div><div>🐾 Hewan disapa: <b>${st.pets||0}x</b></div>
 <div>${bar('🍚','Kenyang',nd.k,col(nd.k))}${bar('⚡','Energi',nd.e,col(nd.e))}</div><div>${bar('😊','Senang',nd.s,col(nd.s))}${bar('🫧','Bersih',nd.b,col(nd.b))}</div>
@@ -662,25 +663,31 @@ else{T.rs=-.5+Math.sin(t*4.5)*.3;T.re=-.9;T.ls=-.25+Math.sin(t*3.2)*.15;T.hx=Mat
 else{if(ex=='sad'){T.hx=.22;T.ls=.05;T.rs=.05}else if(ex=='surprise'){T.ls=-1.1;T.rs=-1.1;T.hx=-.08}else if(ex=='happy'||ex=='laugh'){T.hx=.06+Math.sin(t*5)*.06;T.by=Math.abs(Math.sin(t*4))*.02;T.ls=-.3;T.rs=-.3}else{T.hx=.08+Math.sin(t*2.5)*.05}}}
 const GREET=['Halo!','Hai, apa kabar?','Permisi...','Selamat ya!','Lagi apa nih?','Hai hai!'];
 function talkFree(x,y){if(inside)return Math.abs(x+.5-INX)<=3.7&&y+.5>=INZ-1.9&&y+.5<=INZ+2.9;const tx=Math.round(x),ty=Math.round(y);return tx>0&&ty>0&&tx<W&&ty<H&&!blk[ty][tx]}
-function talkTo(n){if(talk||pet||n.talk||Math.hypot(P.x-n.x,P.y-n.y)>=3)return;SFX.talk();S.nd.s+=5;clamp();(S.stat=S.stat||{}).talks=(S.stat.talks||0)+1;
-const l=say(n),fr=S.fr[n.n],txt=l+(fr>=8?' 💖':fr>=4?' 💛':''),ex=expOf(l);
-n.p=[];n.arrive=null;n.talk=1;n.mv=0;stopNA(n);P.p=[];P.arrive=null;
+function talkTo(n,opt){if(talk||pet||n.talk||(!opt&&Math.hypot(P.x-n.x,P.y-n.y)>=3))return;SFX.talk();S.nd.s+=5;clamp();(S.stat=S.stat||{}).talks=(S.stat.talks||0)+1;
+let txt,ex,reward=null,greet=null;
+if(opt&&opt.bestie){const kind=opt.kind,lv=friendLv(n.n),L1=['Hei bestie, lagi nyariin kamu nih!','Eh kebetulan ketemu! Gimana kabarnya?','Aku bosen, temenin ngobrol dong!'],L2=['Yuk makan bareng, aku yang traktir! 🍜','Laper ya? Ayo, aku yang bayarin!','Lagi baik hati nih, traktiran makan yuk!'],L3=['Nih, buat jajan kamu ya! 💰','Aku ada rezeki lebih, ini buat kamu.','Jangan bilang siapa-siapa, nih uang saku!'];
+if(kind=='chat')txt=L1[rnd(3)]+' '+say(n);else if(kind=='treat'){txt=L2[rnd(3)];addFr(n.n,1);reward={k:'treat'}}else{const amt=Math.round((12+rnd(24))*(1+(lv-3)*.4));txt=L3[rnd(3)]+' (+Rp'+amt+'rb)';addFr(n.n,1);reward={k:'money',amt}}
+ex='happy';greet=['Hai, '+(ACC?ACC.user:'bestie')+'!','Hei bestie!','Nah, ketemu juga!'][rnd(3)]}
+else{const l=say(n);txt=l+(friendLv(n.n)>=4?' 💖':friendLv(n.n)>=3?' 💛':'');ex=expOf(l)}
+n.p=[];n.arrive=null;n.talk=1;n.mv=0;n.visit=0;stopNA(n);P.p=[];P.arrive=null;
 let dx=P.x-n.x,dy=P.y-n.y,L=Math.hypot(dx,dy);if(L<.2){dx=0;dy=1;L=1}dx/=L;dy/=L;let sx=n.x+dx*1.2,sy=n.y+dy*1.2;
 for(const a of[0,.8,-.8,1.6,-1.6,2.4,-2.4,3.14]){const c=Math.cos(a),s=Math.sin(a),tx=n.x+(dx*c-dy*s)*1.2,ty=n.y+(dx*s+dy*c)*1.2;if(talkFree(tx,ty)){sx=tx;sy=ty;break}}
-P.p=[[sx,sy]];talk={n,t:0,appr:1,ph:GREET[rnd(GREET.length)],txt,ex,sx,sy,dur:1.4+2.8+txt.length*.055+.7,pb:0,nb:0,pT:{},nT:{}};
+P.p=[[sx,sy]];talk={n,t:0,appr:1,ph:greet||GREET[rnd(GREET.length)],bes:!!(opt&&opt.bestie),reward,txt,ex,sx,sy,dur:1.4+2.8+txt.length*.055+.7,pb:0,nb:0,pT:{},nT:{}};
 camSave={td:tdist,yw:yaw,pt:pitchT};tdist=5.4;pitchT=.42;
 if(!inside){const a=Math.atan2(n.x-sx,n.y-sy),c1=a+Math.PI*.42,c2=a-Math.PI*.42,dd=x=>Math.abs(Math.atan2(Math.sin(x-yaw),Math.cos(x-yaw)));yawT=dd(c1)<dd(c2)?c1:c2}}
 function updTalk(dt){const k=talk,n=k.n;
 if(k.appr){if(!P.p.length||Math.hypot(P.x-k.sx,P.y-k.sy)<.06){k.appr=0;P.x=k.sx;P.y=k.sy;P.p=[]}else{k.pT={};k.nT={};P.ang=Math.atan2(n.x-P.x,n.y-P.y);n.ang=Math.atan2(P.x-n.x,P.y-n.y);return}}
 P.ang=Math.atan2(n.x-P.x,n.y-P.y);n.ang=Math.atan2(P.x-n.x,P.y-n.y);
-k.t+=dt;const t=k.t,T1={},T2={},pSp=t<1.4,nSp=t>=1.4&&t<k.dur-.7;let pex='happy',nex='happy';
-if(pSp){T1.rs=-2.2+Math.sin(t*10)*.35;T1.re=-.45;T1.hx=Math.sin(t*8)*.05;gest(T2,'neutral',t,false)}
-else if(nSp){gest(T2,k.ex,t,true);gest(T1,k.ex,t,false);pex=k.ex=='think'?'neutral':k.ex;nex=k.ex}
+k.t+=dt;const t=k.t,T1={},T2={};let pSp=false,nSp=false,pex='happy',nex='happy';
+if(t<1.4){if(k.bes){nSp=true;T2.rs=-2.2+Math.sin(t*10)*.35;T2.re=-.45;T2.hx=Math.sin(t*8)*.05;T1.hx=.04+Math.sin(t*5)*.04;T1.ls=-.3;T1.rs=-.3}else{pSp=true;T1.rs=-2.2+Math.sin(t*10)*.35;T1.re=-.45;T1.hx=Math.sin(t*8)*.05;gest(T2,'neutral',t,false)}}
+else if(t<k.dur-.7){nSp=true;gest(T2,k.ex,t,true);gest(T1,k.ex,t,false);pex=k.ex=='think'?'neutral':k.ex;nex=k.ex}
 else{pex='neutral';nex='neutral';T1.hx=.03;T2.hx=.03}
 k.pT=T1;k.nT=T2;face(pg,pex,pSp,t);face(n.g,nex,nSp,t);
-if(!k.pb){k.pb=1;bubble(pg,k.ph,1300)}if(t>=1.4&&!k.nb){k.nb=1;bubble(n.g,k.txt,(k.dur-1.4-.9)*1000);SFX.talk()}
+if(!k.pb){k.pb=1;bubble(k.bes?n.g:pg,k.ph,1300)}
+if(t>=1.4&&!k.nb){k.nb=1;bubble(n.g,k.txt,(k.dur-1.4-.9)*1000);SFX.talk();if(k.reward){applyReward(n,k.reward);k.reward=null}}
 if(t>=k.dur)endTalk()}
 function endTalk(){const n=talk.n;resetFace(pg);resetFace(n.g);n.talk=0;n.wait=Math.max(n.wait||0,1);talk=null;if(camSave){tdist=camSave.td;pitchT=camSave.pt;yawT=inside?null:camSave.yw;camSave=null}}
+
 // ===== hewan =====
 const AM=[],AMS={cat:()=>{snd(700,.12,'sine',.1,520);snd(520,.22,'sine',.08,380,.13)},dog:()=>{snd(230,.09,'sawtooth',.07,150);snd(210,.1,'sawtooth',.07,140,.15)},chicken:()=>[0,.1,.2].forEach(d=>snd(520-d*400,.06,'square',.05,0,d)),squirrel:()=>{snd(1600,.05,'square',.04,2200);snd(1900,.05,'square',.04,2400,.08)}};
 let pet=null;
@@ -739,6 +746,31 @@ $('#fx').onclick=closeMap;fmo.onclick=e=>{if(e.target===fmo)closeMap()};
 $('#mm').onclick=openMap;
 spawnAnimals();
 
+// ===== friendship & bestie =====
+const FLV=[0,1,3,5,8,12];
+function friendLv(name){const v=(S.fr&&S.fr[name])||0;let l=0;for(let i=1;i<FLV.length;i++)if(v>=FLV[i])l=i;return l}
+function friendTag(name){const l=friendLv(name);return l>=4?'💖 Bestie':l==3?'💛 Teman dekat':l>=1?'🙂 Kenalan':'👋 Baru kenal'}
+function addFr(name,k){S.fr=S.fr||{};const b=friendLv(name);S.fr[name]=(S.fr[name]||0)+k;const a=friendLv(name);
+if(a>b)setTimeout(()=>{toast(a>=4&&b<4?`🎉 ${name} sekarang jadi BESTIE-mu! 💖`:`⭐ Pertemanan dengan ${name} naik ke Lv ${a} (${friendTag(name).slice(2).trim()})`,3600);SFX.coin()},900);return S.fr[name]}
+function applyReward(n,r){const at=V(P.x+.5,1.7,P.y+.5);
+if(r.k=='money'){S.money+=r.amt;(S.stat=S.stat||{}).earn=(S.stat.earn||0)+r.amt;SFX.coin();puff('💰',at,.7,1.5,.5);toast(`💝 ${n.n} memberimu Rp${r.amt}rb!`,3200)}
+else{S.nd.k=Math.min(100,S.nd.k+40);S.nd.e=Math.min(100,S.nd.e+8);S.nd.s=Math.min(100,S.nd.s+12);SFX.eat();puff('🍜',at,.7,1.5,.5);toast(`🍜 ${n.n} mentraktirmu makan! Kenyang +40`,3200)}}
+function bestieTick(dt){if(inside||busy||talk||pet||trans||modal||!mnu.hidden||!fmo.hidden||mode!='play')return;
+NP.forEach(n=>{if(n.visit){if(n.in||n.talk||n.int){n.visit=0;n.sp=n.sp0||n.sp;return}
+const d=Math.hypot(P.x-n.x,P.y-n.y);n.vTO-=dt;
+if(d<2.3){n.visit=0;n.sp=n.sp0||n.sp;n.p=[];n.arrive=null;talkTo(n,{bestie:1,kind:n.vk});return}
+if(n.vTO<=0){n.visit=0;n.sp=n.sp0||n.sp;n.wait=2;return}
+if((n.vt-=dt)<=0||!n.p.length){n.vt=1.8;const p=bfs(n.x,n.y,Math.round(P.x),Math.round(P.y));if(p&&p.length>1)n.p=p.slice(0,-1);else if(!p){n.visit=0;n.sp=n.sp0||n.sp}}return}
+if(n.in||n.talk||n.int||friendLv(n.n)<4)return;
+n.bc=(n.bc===undefined?25+rnd(40):n.bc)-dt;if(n.bc>0)return;n.bc=70+rnd(80);
+if(Math.hypot(P.x-n.x,P.y-n.y)<30&&Math.random()<.75){const r=Math.random();n.vk=r<.35?'chat':r<.7?'treat':'money';n.visit=1;n.vt=0;n.vTO=45;n.sp0=n.sp;n.sp=2.4;stopNA(n);n.p=[];n.arrive=null;n.ic='💖';n.dn='kamu';bubble(n.g,'Hei, tunggu aku!',2200);toast(`👋 ${n.n} menghampirimu!`,2600)}})}
+// ===== layar penuh =====
+const fsRoot=document.documentElement,isFS=()=>!!(document.fullscreenElement||document.webkitFullscreenElement);
+function fsNote(t){if(!spl.hidden){const n=$('#fsn');n.textContent=t;n.hidden=false;clearTimeout(n.t);n.t=setTimeout(()=>n.hidden=true,3500)}else toast(t,3200)}
+async function toggleFS(){try{if(!isFS()){const r=fsRoot.requestFullscreen||fsRoot.webkitRequestFullscreen;if(!r){fsNote('Browser ini belum mendukung layar penuh. Di iPhone: Share → Add to Home Screen');return}await r.call(fsRoot);try{await screen.orientation.lock('landscape')}catch(e){}}else{(document.exitFullscreen||document.webkitExitFullscreen).call(document)}}catch(e){fsNote('Layar penuh tidak diizinkan di sini. Buka game langsung di tab sendiri 🙂')}}
+['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,()=>{const t=isFS()?'🗗':'⛶';$('#fsb').textContent=t;$('#fss').textContent=t;setTimeout(fit,120)}));
+$('#fsb').onclick=toggleFS;$('#fss').onclick=toggleFS;
+addEventListener('keydown',e=>{if(mode=='play'&&!/INPUT|TEXTAREA/.test((e.target&&e.target.tagName)||'')&&e.key.toLowerCase()=='f')toggleFS()});
 // pembukaan: cek server lalu tampilkan tombol
 (async()=>{const r=await Promise.race([api('ping'),new Promise(r=>setTimeout(()=>r(null),2500))]);API_OK=!!(r&&r.ok&&r.d&&r.d.ok);$('#ai').textContent=API_OK?'':'Mode lokal: data tersimpan di perangkat ini saja';setTimeout(()=>{$('#sbar').hidden=true;$('#sbl').hidden=true;$('#sbt').hidden=false},800)})();
 function start(){mode='play';S.stat=S.stat||{earn:0,spent:0,acts:0,talks:0};S.fr=S.fr||{};P.x=BY.rumah.d[0];P.y=BY.rumah.d[1];foc.set(P.x+.5,.5,P.y+.5);$('#cr').hidden=true;$('#hud').hidden=false;stage.visible=false;town.visible=true;
@@ -773,7 +805,7 @@ let last=0,acc=0,hT=0,sT=0,stT=0;
 function loop(ts){const dt=Math.min(.05,(ts-last)/1000||0);last=ts;tt+=dt;
 if(mode=='play'){setShadow(16);amb.intensity=.2;
 if(!modal){if(!busy){acc+=dt*2*mult;while(acc>=1){acc--;tick(1)}}
-P.slow=Math.min(...Object.values(S.nd))<8;mover(P,dt);kbMove(dt);if(!inside)updAnimals(dt);NP.forEach(n=>{if(n.talk){n.mv=0}else{npcAI(n,dt);mover(n,dt)}});
+P.slow=Math.min(...Object.values(S.nd))<8;mover(P,dt);kbMove(dt);if(!inside)updAnimals(dt);if(!inside)bestieTick(dt);NP.forEach(n=>{if(n.talk){n.mv=0}else if(n.visit){mover(n,dt)}else{npcAI(n,dt);mover(n,dt)}});
 if(P.mv&&(stT+=dt)>.28){stT=0;SFX.step()}
 if((hT+=dt)>.25){hT=0;hud()}if((sT+=dt)>30){sT=0;if(ACC)saveGame(true)}}
 if(busy)updAct(dt);if(talk)updTalk(dt);if(pet)updPet(dt);syncE(P,pg,dt);if(busy||poseOn||talk||pet){const df=applyPose(pg,busy?busy.T||{}:(talk?talk.pT:(pet?pet.T:{})),dt);poseOn=!!busy||!!talk||!!pet||df>.01;if(busy&&busy.post)busy.post(pg)}updPT(dt);tickBub(pg,dt);pg.userData.ar.position.y=1.6+Math.sin(tt*5)*.06;NP.forEach(n=>{tickBub(n.g,dt);if(n.ls)n.ls.visible=!n.g.userData.bub;n.g.visible=!n.in||!!n.int;if(n.int&&!n.in)leaveNPC(n);if(n.na)updNA(n,dt);syncE(n,n.g,dt);if(talk&&talk.n===n){n.cp=n.cp||{...RP};applyPose(n.g,talk.nT,dt,n.cp);n.pOn=1}else if(n.na){applyPose(n.g,n.apT||{},dt,n.cp);n.pOn=1;if(n.na.c.post)n.na.c.post(n.g)}else if(n.pOn){if(applyPose(n.g,{},dt,n.cp)<.01)n.pOn=0}lab(n)});

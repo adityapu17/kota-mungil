@@ -4,7 +4,7 @@ Game web 3D ala The Sims: kota kecil, NPC otomatis, waktu/cuaca dinamis, uang, m
 
 ## Kontrol
 - Tap/klik: jalan, masuk bangunan, ngobrol dengan warga, sapa hewan
-- **W A S D** / panah: jalan (Shift = lari) · **E** / Enter / Spasi: interaksi · **M**: peta penuh · **Esc**: menu
+- **W A S D** / panah: jalan (Shift = lari) · **E** / Enter / Spasi: interaksi · **M**: peta penuh · **F**: layar penuh · **Esc**: menu
 - Geser layar / drag: putar kamera · Klik minimap: buka peta penuh, tap nama bangunan untuk menuju ke sana
 
 ## Struktur
