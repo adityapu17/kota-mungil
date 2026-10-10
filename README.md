@@ -2,6 +2,11 @@
 
 Game web 3D ala The Sims: kota kecil, NPC otomatis, waktu/cuaca dinamis, uang, masuk gedung, aksi beranimasi, akun + save game.
 
+## Kontrol
+- Tap/klik: jalan, masuk bangunan, ngobrol dengan warga, sapa hewan
+- **W A S D** / panah: jalan (Shift = lari) · **E** / Enter / Spasi: interaksi · **M**: peta penuh · **Esc**: menu
+- Geser layar / drag: putar kamera · Klik minimap: buka peta penuh, tap nama bangunan untuk menuju ke sana
+
 ## Struktur
 - `index.html` — seluruh game (Three.js r128 dari cdnjs)
 - `functions/api/[[path]].js` — API akun & save (Cloudflare Pages Function + D1)
