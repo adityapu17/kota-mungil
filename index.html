@@ -685,11 +685,13 @@ $('#bn').onclick=()=>{SFX.pop();openAuth('new')};$('#bl').onclick=()=>{SFX.pop()
 $('#ab').onclick=()=>{SFX.pop();af.hidden=true;$('#sbt').hidden=false};
 ['#au','#ap'].forEach(q=>$(q).onkeydown=e=>{if(e.key=='Enter')$('#as').click()});
 $('#as').onclick=async()=>{const u=$('#au').value.trim(),p=$('#ap').value;
-if(!UREG.test(u)){msg('Username 3-16 karakter: huruf, angka, atau _',1);return}
+if(!UREG.test(u)){msg('Username 3-16 karakter: huruf, angka, atau _',1);$('#af').hidden=false;$('#spl').hidden=true;return}
 if(p.length<4){msg('Password minimal 4 karakter',1);return}
 $('#as').disabled=true;msg('Memproses…');
 try{if(amode=='new'){const r=await doRegister(u,p);if(r.err){msg(r.err=='taken'?'Username "'+u+'" tidak tersedia, coba yang lain':r.err,1);return}
-S=defaultS();spl.hidden=true;af.hidden=true;mode='cr';SFX.start()}
+S=defaultS();spl.hidden=true;af.hidden=true;mode='cr';SFX.start();
+town.visible=false;
+stage.visible=true;}
 else{const r=await doLogin(u,p);if(r.err){msg(r.err,1);return}const sv=await loadGame();if(!sv||!sv.look){ACC=null;msg('Belum ada data tersimpan untuk akun ini. Pilih Game Baru.',1);return}S=sv;L=S.look;spl.hidden=true;af.hidden=true;beginGame()}}
 finally{$('#as').disabled=false}};
 function beginGame(){try{document.activeElement&&document.activeElement.blur()}catch(e){}const ld=$('#ld'),bar=$('#lbar i');ld.hidden=false;bar.style.width='0%';$('#ltip').textContent='💡 '+TIPS[rnd(TIPS.length)];let p=0;const iv=setInterval(()=>{p=Math.min(100,p+4+Math.random()*6);bar.style.width=p+'%'},80);
