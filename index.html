@@ -442,7 +442,7 @@ function crUI(){let h=`<div class="hb">CHARACTER CREATOR</div><div class="hf" da
   h+=`<button class="tb${TB[g]==t?' on':''}${g=='f'?' rt':''}" data-g="${g}" data-t="${t}" style="top:${TT[i]}%">${IC[t=='hair'?'hair'+g:t]}</button>`;
   PL[t].forEach((c,i)=>{h+=`<i class="sw${LK[g][t]==c?' on':''}" data-g="${g}" data-c="${c}" style="left:${TX[g][i<5?0:1]}%;top:${TY[i%5]}%;background:${c}"></i>`;
   const ar=STY[t];if(ar){const key=LKEY[t],cu=LK[g][key]||DEFS[g][key],nm=(ar.find(a=>a[0]==cu)||ar[0])[1];h+=`<div class="sb" style="left:${g=='m'?28:73.6}%"><button data-g="${g}" data-sd="-1">◀</button><span>${nm}</span><button data-g="${g}" data-sd="1">▶</button></div>`;
-}});});
+}});});});
 cr.onclick=e=>{const b=e.target.closest('button');if(b&&b.id=='go'){S.look={...LK[sel]};beginGame();return}
 const d=e.target.closest('[data-g]');if(!d)return;const D=d.dataset;sel=D.g;if(D.t)TB[D.g]=D.t;if(D.c){LK[D.g][TB[D.g]]=D.c;stageChar(D.g)}if(D.sd){const ar=STY[TB[D.g]];if(ar){const key=LKEY[TB[D.g]],ci=Math.max(0,ar.findIndex(a=>a[0]==(LK[D.g][key]||DEFS[D.g][key])));LK[D.g][key]=ar[(ci+ +D.sd+ar.length)%ar.length][0];stageChar(D.g)}}SFX.pop();crUI()};
 town.visible=false;stageChar('m');stageChar('f');crUI();
