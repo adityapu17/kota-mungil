@@ -439,7 +439,7 @@ const STY={hair:[['pendek','Pendek Acak'],['bob','Bob'],['kuncir','Kuncir Tinggi
 const TX={m:[14.4,44.1],f:[55.8,85.7]},TY=[40.9,47,53.2,59.3,65.5],TT=[23.5,36,48.5,61,73.5],cr=$('#cr');
 function crUI(){let h=`<div class="hb">CHARACTER CREATOR</div><div class="hf" data-g="m" style="left:0"></div><div class="hf" data-g="f" style="left:50%"></div><button class="pl${sel=='m'?' on':''}" data-g="m" style="left:37.6%">COWOK</button><button class="pl${sel=='f'?' on':''}" data-g="f" style="left:51.5%">CEWEK</button>`;
 ['m','f'].forEach(g=>{TABS.forEach((t,i)=>{
-  h+=`<button class="tb${TB[g]==t?' on':''>${g=='f'?' rt':''}" data-g="${g}" data-t="${t}" style="top:${TT[i]}%">${IC[t=='hair'?'hair'+g:t]}</button>`;
+  h+=`<button class="tb${TB[g]==t?' on':''}${g=='f'?' rt':''}" data-g="${g}" data-t="${t}" style="top:${TT[i]}%">${IC[t=='hair'?'hair'+g:t]}</button>`;
   PL[t].forEach((c,i)=>{h+=`<i class="sw${LK[g][t]==c?' on':''}" data-g="${g}" data-c="${c}" style="left:${TX[g][i<5?0:1]}%;top:${TY[i%5]}%;background:${c}"></i>`;
   const ar=STY[t];if(ar){const key=LKEY[t],cu=LK[g][key]||DEFS[g][key],nm=(ar.find(a=>a[0]==cu)||ar[0])[1];h+=`<div class="sb" style="left:${g=='m'?28:73.6}%"><button data-g="${g}" data-sd="-1">◀</button><span>${nm}</span><button data-g="${g}" data-sd="1">▶</button></div>`;
 }});});
