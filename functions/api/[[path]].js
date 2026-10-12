@@ -9,7 +9,9 @@ let ready=null;
 const init=db=>ready||(ready=db.batch([
 db.prepare('CREATE TABLE IF NOT EXISTS users(username TEXT PRIMARY KEY COLLATE NOCASE, salt TEXT NOT NULL, hash TEXT NOT NULL, created INTEGER NOT NULL)'),
 db.prepare('CREATE TABLE IF NOT EXISTS saves(username TEXT PRIMARY KEY COLLATE NOCASE, data TEXT NOT NULL, updated INTEGER NOT NULL)'),
-db.prepare('CREATE TABLE IF NOT EXISTS sessions(token TEXT PRIMARY KEY, username TEXT NOT NULL, expires INTEGER NOT NULL)')]));
+db.prepare('CREATE TABLE IF NOT EXISTS sessions(token TEXT PRIMARY KEY, username TEXT NOT NULL, expires INTEGER NOT NULL)'),
+db.prepare('CREATE TABLE IF NOT EXISTS scores(username TEXT NOT NULL COLLATE NOCASE, game TEXT NOT NULL, score INTEGER NOT NULL, updated INTEGER NOT NULL, PRIMARY KEY(username,game))')]));
+const GAMES=['tetris','run','flappy','space','race'],RPT={tetris:100,run:10,flappy:1,space:20,race:10};
 async function who(db,token){if(!token||typeof token!='string')return null;
 const r=await db.prepare('SELECT username FROM sessions WHERE token=?1 AND expires>?2').bind(token,Date.now()).first();return r?r.username:null}
 async function newSession(db,u){const t=rnd(24);await db.prepare('INSERT INTO sessions(token,username,expires) VALUES(?1,?2,?3)').bind(t,u,Date.now()+30*864e5).run();return t}
@@ -35,4 +37,11 @@ const d=String(b.data||'');if(!d||d.length>200000)return J({error:'invalid'},400
 await db.prepare('INSERT OR REPLACE INTO saves(username,data,updated) VALUES(?1,?2,?3)').bind(u,d,Date.now()).run();return J({ok:true})}
 if(path=='load'){const u=await who(db,b.token);if(!u)return J({error:'unauthorized'},401);
 const r=await db.prepare('SELECT data FROM saves WHERE username=?1').bind(u).first();return J({ok:true,data:r?r.data:null})}
+if(path=='score'){const u=await who(db,b.token);if(!u)return J({error:'unauthorized'},401);
+const g=String(b.game||''),sc=Math.floor(Number(b.score));if(!GAMES.includes(g)||!(sc>=0)||sc>1e7)return J({error:'invalid'},400);
+await db.prepare('INSERT INTO scores(username,game,score,updated) VALUES(?1,?2,?3,?4) ON CONFLICT(username,game) DO UPDATE SET score=MAX(score,excluded.score),updated=excluded.updated').bind(u,g,sc,Date.now()).run();return J({ok:true})}
+if(path=='board'){const r=await db.prepare('SELECT username,game,score FROM scores WHERE score>0').all(),rows=r.results||[],games={},ov={};
+GAMES.forEach(g=>{games[g]=rows.filter(x=>x.game==g).sort((a,b)=>b.score-a.score).slice(0,20).map(x=>({u:x.username,s:x.score}))});
+rows.forEach(x=>{ov[x.username]=(ov[x.username]||0)+Math.floor(x.score/RPT[x.game])});
+return J({ok:true,games,overall:Object.entries(ov).filter(e=>e[1]>0).map(([u,p])=>({u,p})).sort((a,b)=>b.p-a.p).slice(0,20)})}
 return J({error:'not_found'},404)}

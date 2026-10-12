@@ -27,3 +27,7 @@ Tanpa binding `DB`, game otomatis jalan di **mode lokal** (akun & save disimpan 
 - `POST /api/save` `{token,data}` · `POST /api/load` `{token}`
 
 Password di-hash PBKDF2-SHA256 (100k iterasi + salt) di server; tidak pernah disimpan polos.
+
+
+## Arcade & peringkat
+Game di Arcade (Tetris, Mungil Run, Flappy Mungil, Space Mungil, Mungil Racing) bisa dimainkan layar penuh. Skor terbaik tiap pemain disimpan di tabel `scores` (dibuat otomatis oleh Function; `schema.sql` juga sudah berisi tabelnya). Tanpa D1, peringkat hanya tersimpan di perangkat ini.
