@@ -211,9 +211,14 @@ sun.shadow.normalBias=.01;sc.add(amb,hemi,sun,sun.target,rim,rim.target);let shR
 const M=(c,o={})=>{if(o.emissive)o={...o,emissive:new THREE.Color(o.emissive).convertSRGBToLinear()};return new THREE.MeshStandardMaterial({color:new THREE.Color(c).convertSRGBToLinear(),roughness:.8,metalness:0,...o})};
 function mesh(ge,m,x=0,y=0,z=0){const o=new THREE.Mesh(ge,m);o.position.set(x,y,z);o.castShadow=o.receiveShadow=true;return o}
 var blushMat=null;
-const HSP={pendek:{fem:0,bm:'m'},bob:{fem:1,bm:'f'},kuncir:{fem:1,bm:'f'},panjang:{fem:1,bm:'f'},cepak:{fem:0,bm:'m',amp:.1,rad:.97},kuncir2:{fem:1,bm:'f'},cepol:{fem:1,bm:'f'},keriting:{fem:1,bm:'c',amp:.35,rad:1.04},jabrik:{fem:0,bm:'m',amp:.7}};
-const TP={kaos:{prof:'tee',slv:'short',col:'none'},hoodie:{prof:'hood',slv:'long',col:'hood'},lengan:{prof:'tee',slv:'long',col:'none'},tanktop:{prof:'slim',slv:'none',col:'none'},sweater:{prof:'hood',slv:'long',col:'turtle'},jaket:{prof:'box',slv:'long',col:'jacket'}};
-const BP={panjang:{len:'full'},jeans:{len:'full',cuff:1},pendek:{len:'short'},capri:{len:'three'},rok:{skirt:.14},rokpanjang:{skirt:.27}};
+const HSP={pendek:{fem:0,bm:'m'},bob:{fem:1,bm:'f'},kuncir:{fem:1,bm:'f'},panjang:{fem:1,bm:'f'},cepak:{fem:0,bm:'m',amp:.1,rad:.97},kuncir2:{fem:1,bm:'f'},cepol:{fem:1,bm:'f'},keriting:{fem:1,bm:'c',amp:.35,rad:1.04},jabrik:{fem:0,bm:'m',amp:.7},dreadlocks:{fem:1,bm:'c',amp:.3,rad:1.02},afro:{fem:0,bm:'m',amp:.4},ponytail:{fem:0,bm:'m'},braid:{fem:1,bm:'f'},samurai:{fem:0,bm:'m',amp:.15,rad:.97},undercut:{fem:0,bm:'m',amp:.1,rad:.96},mohawk:{fem:0,bm:'m',amp:.05,rad:.95},langsutan:{fem:1,bm:'f',amp:.8}};
+const TP={kaos:{prof:'tee',slv:'short',col:'none'},hoodie:{prof:'hood',slv:'long',col:'hood'},lengan:{prof:'tee',slv:'long',col:'none'},tanktop:{prof:'slim',slv:'none',col:'none'},sweater:{prof:'hood',slv:'long',col:'turtle'},jaket:{prof:'box',slv:'long',col:'jacket'},kemeja:{prof:'tee',slv:'long',col:'collar'},batik:{prof:'tee',slv:'long',col:'none',pat:'batik'},gucci:{prof:'box',slv:'short',col:'none',pat:'gucci'},oversize:{prof:'hood',slv:'long',col:'none'},crop:{prof:'slim',slv:'short',col:'none',crop:1},flanel:{prof:'box',slv:'long',col:'collar',pat:'flanel'}};
+const BP={panjang:{len:'full'},jeans:{len:'full',cuff:1},pendek:{len:'short'},capri:{len:'three'},rok:{skirt:.14},rokpanjang:{skirt:.27},cargo:{len:'full',cargo:1},jalak:{len:'full',flare:1},binek:{len:'bike'},training:{len:'full',stripe:1},jelatah:{len:'full',bib:1},sport:{len:'short',stripe:1}};
+const PTC={};function patTex(p,col){const k=p+col;if(PTC[k])return PTC[k];const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d');x.fillStyle=col;x.fillRect(0,0,128,128);
+if(p=='flanel'){x.fillStyle='rgba(0,0,0,.3)';[0,64].forEach(o=>{x.fillRect(o+8,0,22,128);x.fillRect(0,o+8,128,22)});x.fillStyle='rgba(255,255,255,.4)';[0,64].forEach(o=>{x.fillRect(o+44,0,3,128);x.fillRect(0,o+44,128,3)})}
+else if(p=='batik'){x.strokeStyle='rgba(70,35,10,.6)';x.lineWidth=3;for(let i=0;i<4;i++)for(let j=0;j<4;j++){x.save();x.translate(i*32+16,j*32+16);x.rotate(Math.PI/4);x.strokeRect(-9,-9,18,18);x.restore();x.fillStyle=(i+j)%2?'rgba(255,230,170,.75)':'rgba(70,35,10,.55)';x.beginPath();x.arc(i*32+16,j*32+16,4,0,7);x.fill()}}
+else if(p=='gucci'){x.fillStyle='#1f6b3a';x.fillRect(38,0,16,128);x.fillRect(74,0,16,128);x.fillStyle='#b3262d';x.fillRect(54,0,20,128)}
+const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(3,2);t.encoding=THREE.sRGBEncoding;return PTC[k]=t}
 function hairGeo(sty){const P=HSP[sty]||HSP.pendek,fem=P.fem,rad=P.rad||1,ak=(P.amp===undefined?1:P.amp)*.55,g=new THREE.SphereGeometry(1,112,72),p=g.attributes.position,v=new THREE.Vector3();
 let BM;if(P.bm=='c'){BM=[];for(let i=0;i<34;i++){const y=-.25+1.25*((i*.618)%1),a=i*2.399,r=Math.sqrt(Math.max(0,1-y*y));BM.push([Math.cos(a)*r,y,Math.sin(a)*r,.2,.3])}}
 else BM=P.bm=='f'?[[-.3,.9,.1,.22,.4],[.3,.9,0,.2,.4],[-.6,.7,.4,.12,.4],[-.42,.45,.88,.24,.3],[.18,.55,.85,.11,.3],[0,.55,-.85,.12,.6]]:[[-.7,.7,.1,.26,.3],[-.3,.93,.05,.3,.3],[.15,.97,.05,.3,.3],[.6,.78,.1,.26,.3],[-.4,.4,.9,.2,.25],[.35,.5,.85,.16,.28],[.97,.15,0,.12,.42],[-.97,.15,0,.12,.42],[0,.5,-.85,.15,.6]];
@@ -239,30 +244,40 @@ const PC=new THREE.Color(L.pants),SOC=new THREE.Color(L.shoes),SK=new THREE.Colo
 const ring=(r,t,m,x,y,z)=>{const o=mesh(new TO(r,t,12,40),m,x,y,z);o.rotation.x=Math.PI/2;return o};
 const scp=(pts,k)=>pts.map(a=>[a[0]*k,a[1]]);
 // ---- kaki: celana/rok + sepatu ----
-const TMPC=new THREE.Color(),SZ={sneaker:-.33,bot:-.2,sandal:-.31,formal:-.33,hightop:-.26}[ss],ZC=ss=='sandal'?SK:SOC;
-const legCol=(y,c)=>{const yc=B_.len=='short'?-.12:B_.len=='three'?-.24:-9,tp=B_.skirt?0:Math.min(1,Math.max(0,(y-yc)/.02+.5));c.copy(SK).lerp(PC,tp);
+const TMPC=new THREE.Color(),SZ={sneaker:-.33,bot:-.2,sandal:-.31,formal:-.33,hightop:-.26,boot:-.1,slipon:-.34,konve:-.24,platform:-.3,flatform:-.32,kumutus:-.3}[ss],ZC=(ss=='sandal'||ss=='flatform')?SK:SOC;
+const legCol=(y,c)=>{const yc=B_.len=='bike'?-.06:B_.len=='short'?-.12:B_.len=='three'?-.24:-9,tp=B_.skirt?0:Math.min(1,Math.max(0,(y-yc)/.02+.5));c.copy(SK).lerp(PC,tp);
 if(B_.cuff&&tp>.5){const q=Math.min(1,Math.max(0,(-.26-y)/.02+.5));c.lerp(CU,q)}
 const t=Math.min(1,Math.max(0,(y-SZ)/.05+.5));TMPC.copy(c);c.copy(ZC).lerp(TMPC,t)};
 const leg=s=>{const p=new THREE.Group();p.position.set(s*.074,HIP,0);p.rotation.y=s*.12;
-p.add(limb([[0,.02],[.082,0],[.094,-.06],[.09,-.14],[.083,-.2],[.084,-.27],[.082,-.33],[.078,-.36],[0,-.37]],legCol));
+p.add(limb(B_.flare?[[0,.02],[.082,0],[.094,-.06],[.09,-.14],[.092,-.2],[.108,-.27],[.126,-.33],[.13,-.36],[0,-.37]]:[[0,.02],[.082,0],[.094,-.06],[.09,-.14],[.083,-.2],[.084,-.27],[.082,-.33],[.078,-.36],[0,-.37]],legCol));
 if(ss=='sneaker'){p.add(sp(.1,wh,0,-.4,.05,.7,.17,1.28),sp(.1,so,0,-.36,.05,.68,.5,1.2));[.06,.11].forEach(z=>p.add(mesh(new THREE.BoxGeometry(.07,.012,.014),wh,0,-.318,z)))}
 else if(ss=='bot'){p.add(sp(.1,cm('#3a3030'),0,-.4,.05,.72,.2,1.3),sp(.1,so,0,-.36,.06,.7,.5,1.25),mesh(new Y(.089,.093,.17,28),so,0,-.255,0),ring(.09,.012,dc(L.shoes,-.15),0,-.17,0))}
 else if(ss=='sandal'){p.add(sp(.1,SK&&cm(L.skin),0,-.385,.05,.62,.38,1.15),sp(.1,cm('#5a4030'),0,-.405,.05,.66,.12,1.2));[.01,.09].forEach(z=>p.add(mesh(new THREE.BoxGeometry(.075,.014,.03),so,0,-.352,z)))}
 else if(ss=='formal'){p.add(sp(.1,cm('#222'),0,-.4,.05,.68,.15,1.3),sp(.1,cm(L.shoes,{roughness:.2}),0,-.365,.06,.58,.45,1.42))}
+else if(ss=='boot'){p.add(sp(.1,cm('#2d2420'),0,-.4,.05,.72,.2,1.3),sp(.1,so,0,-.36,.06,.7,.5,1.25),mesh(new Y(.089,.094,.26,28),so,0,-.22,0),ring(.092,.014,dc(L.shoes,-.15),0,-.09,0))}
+else if(ss=='slipon'){p.add(sp(.1,cm('#e9e2d6'),0,-.4,.05,.7,.15,1.28),sp(.1,so,0,-.365,.06,.66,.4,1.28),mesh(new THREE.BoxGeometry(.07,.012,.012),wh,0,-.335,.12))}
+else if(ss=='konve'){p.add(sp(.1,wh,0,-.4,.05,.7,.17,1.28),sp(.1,so,0,-.36,.05,.68,.5,1.2),mesh(new Y(.088,.09,.14,28),so,0,-.27,0),sp(.07,wh,0,-.37,.14,.9,.55,.75),ring(.09,.01,wh,0,-.2,0),sp(.02,wh,s*.088,-.26,0,.4,1,1))}
+else if(ss=='platform'){p.add(sp(.1,wh,0,-.395,.05,.74,.32,1.32),sp(.1,so,0,-.34,.05,.68,.5,1.2),mesh(new Y(.088,.09,.08,28),so,0,-.28,0))}
+else if(ss=='flatform'){p.add(sp(.1,cm('#8a6a4a'),0,-.395,.05,.74,.34,1.3),sp(.1,so,0,-.34,.05,.66,.3,1.15));[.0,.08].forEach(z=>p.add(mesh(new THREE.BoxGeometry(.08,.014,.03),so,0,-.3,z)))}
+else if(ss=='kumutus'){p.add(sp(.1,so,0,-.37,.05,.78,.6,1.35),sp(.06,dc(L.shoes,.12),0,-.33,.12,1,.6,1))}
 else{p.add(sp(.1,wh,0,-.4,.05,.7,.17,1.28),sp(.1,so,0,-.36,.05,.68,.5,1.2),mesh(new Y(.088,.09,.11,28),so,0,-.285,0),mesh(new Y(.09,.09,.02,28),wh,0,-.235,0));[.07,.11].forEach(z=>p.add(mesh(new THREE.BoxGeometry(.06,.012,.014),wh,0,-.3,z+.04)))}
+if(B_.cargo)p.add(mesh(new THREE.BoxGeometry(.034,.085,.075),dc(L.pants,-.07),s*.1,-.13,0));if(B_.stripe){const sl=B_.len=='short'?.1:.3;p.add(mesh(new THREE.BoxGeometry(.01,sl,.022),wh,s*.094,B_.len=='short'?-.06:-.15,0))}
 G.add(p);return p};
 const legL=leg(-1),legR=leg(1);
 if(B_.skirt){const k=B_.skirt,hr=.17+k*.55;body.add(lathe([[0,HIP+.05],[.16,HIP+.05],[.172,HIP],[.17+(hr-.17)*.45,HIP-k*.5],[hr,HIP-k],[hr-.012,HIP-k-.01],[0,HIP-k-.01]],pa,.88))}
 else body.add(lathe([[0,HIP-.06],[.12,HIP-.06],[.15,HIP-.01],[.156,HIP+.04],[0,HIP+.04]],pa,.8));
+if(T_.pat){sh.map=patTex(T_.pat,L.shirt);sh.color.set(0xffffff);sh.needsUpdate=true}
 // ---- badan atas ----
 const PROF={tee:[[0,HIP],[.15,HIP],[.168,HIP+.03],[.178,HIP+.11],[.172,HIP+.18],[.166,HIP+.26],[.168,SH-.04],[.13,SH+.005],[.075,SH+.045],[0,SH+.055]],hood:[[0,HIP-.02],[.165,HIP-.02],[.19,HIP+.02],[.204,HIP+.11],[.2,HIP+.2],[.2,SH-.09],[.2,SH-.04],[.15,SH+.005],[.09,SH+.045],[0,SH+.06]],box:[[0,HIP],[.17,HIP],[.185,HIP+.03],[.19,HIP+.12],[.19,HIP+.2],[.19,SH-.09],[.185,SH-.04],[.14,SH+.005],[.085,SH+.045],[0,SH+.055]],slim:[[0,HIP],[.14,HIP],[.156,HIP+.03],[.164,HIP+.11],[.158,HIP+.2],[.152,SH-.1],[.152,SH-.04],[.12,SH+.005],[.07,SH+.045],[0,SH+.055]]};
 const AX={tee:.172,hood:.2,box:.19,slim:.165}[T_.prof];
-if(T_.prof=='slim'){const tk=limb(PROF.slim,(y,c,x)=>{const t1=Math.min(1,Math.max(0,(SH-.075-y)/.02+.5)),st=Math.abs(Math.abs(x)-.085)<.022&&y<SH+.035?1:0,t=Math.max(t1,st);c.copy(SK).lerp(SC,t)});tk.scale.z=.8;body.add(tk)}
+if(T_.prof=='slim'){const tk=limb(PROF.slim,(y,c,x)=>{const t1=Math.min(1,Math.max(0,(SH-.075-y)/.02+.5)),st=Math.abs(Math.abs(x)-.085)<.022&&y<SH+.035?1:0,t=Math.max(t1,st)*(T_.crop?Math.min(1,Math.max(0,(y-(HIP+.13))/.02+.5)):1);c.copy(SK).lerp(SC,t)});tk.scale.z=.8;body.add(tk)}
 else body.add(lathe(PROF[T_.prof],sh,.8));
 body.add(mesh(new Y(.065,.07,.1,24),sk,0,SH+.05,0));
 if(T_.col=='hood'){body.add(ring(.11,.05,sh,0,SH+.045,-.01),ring(.085,.028,cm('#e8962e'),0,SH+.035,.01),sp(.12,sh,0,SH+.02,-.1,1,.65,.75),sp(.15,dc(L.shirt,-.04),0,HIP+.09,.15,1,.42,.2));[-1,1].forEach(s=>{body.add(mesh(new Y(.007,.007,.12,8),wh,s*.04,SH-.05,.172),sp(.013,wh,s*.04,SH-.11,.172))})}
 else if(T_.col=='turtle'){body.add(mesh(new Y(.088,.094,.1,28),sh,0,SH+.075,0),ring(.09,.024,dc(L.shirt,-.05),0,SH+.125,0))}
 else if(T_.col=='jacket'){body.add(ring(.1,.03,dc(L.shirt,-.07),0,SH+.05,0),mesh(new THREE.BoxGeometry(.016,SH-HIP-.07,.012),cm('#d0d4da',{metalness:.3}),0,(HIP+SH)/2-.015,.158),sp(.016,cm('#d0d4da'),0,SH-.04,.16))}
+else if(T_.col=='collar'){const cl=dc(L.shirt,-.1);body.add(ring(.1,.02,cl,0,SH+.05,0),mesh(new THREE.BoxGeometry(.014,SH-HIP-.06,.01),cl,0,(HIP+SH)/2-.01,.138));[0,1,2,3].forEach(i=>body.add(sp(.011,wh,0,SH-.07-i*.08,.142)));[-1,1].forEach(s=>{const f=mesh(new THREE.BoxGeometry(.06,.03,.01),cl,s*.045,SH+.03,.1);f.rotation.z=-s*.6;body.add(f)})}
+if(B_.bib){const bz=({tee:.14,hood:.165,box:.155,slim:.125}[T_.prof]||.15)+.012,gd=cm('#d9c36a');body.add(mesh(new THREE.BoxGeometry(.16,.16,.02),pa,0,HIP+.2,bz),sp(.016,gd,-.065,HIP+.26,bz+.012),sp(.016,gd,.065,HIP+.26,bz+.012));[-1,1].forEach(s=>body.add(mesh(new THREE.BoxGeometry(.026,.26,.02),pa,s*.065,HIP+.36,bz-.004)))}
 const arm=s=>{const p=new THREE.Group();p.position.set(s*AX,SH-.05,0);const el=new THREE.Group();el.position.y=-.19;el.rotation.x=-.12;p.add(el);
 const k=T_.prof=='tee'?.82:1;
 if(T_.slv=='long'){p.add(sp((T_.prof=='tee'?.062:.07),sh,0,.005,0),sp(.079*k,sh,0,-.19,0));
@@ -290,6 +305,14 @@ else if(hs=='cepol'){hd.add(sp(.12,ha,0,.29,-.07),ring(.085,.02,dc(L.hair,-.18),
 else if(hs=='panjang'){hd.add(sp(.2,ha,0,-.12,-.09,1.1,1.7,.75),sp(.1,ha,-.2,-.1,-.02,.5,1.7,.9),sp(.1,ha,.2,-.1,-.02,.5,1.7,.9))}
 else if(hs=='keriting'){for(let i=0;i<46;i++){const y=-.35+1.35*((i*.618)%1),ang=i*2.399,r=Math.sqrt(Math.max(0,1-y*y)),front=Math.cos(ang)*r*0+Math.sin(ang)*r;if(front>.55&&y<.55)continue;const rr=.255+(i%3)*.01;hd.add(sp(.075+(i%4)*.008,ha,Math.cos(ang)*r*rr*.95,y*.27,Math.sin(ang)*r*rr*.95))}}
 else if(hs=='jabrik'){[[0,1,.15],[-.5,.9,.1],[.5,.9,.1],[-.25,.85,.55],[.3,.88,.5],[-.85,.45,.1],[.85,.45,.1],[0,.75,-.55]].forEach(a=>{const d=V(a[0],a[1],a[2]).normalize(),c=mesh(new THREE.ConeGeometry(.06,.17,12),ha,d.x*.26,d.y*.28,d.z*.26);c.quaternion.setFromUnitVectors(V(0,1,0),d);hd.add(c)})}
+else if(hs=='dreadlocks'){for(let i=0;i<10;i++){const a=1.8+i*.3,dx=Math.sin(a),dz=Math.cos(a),e=(i%3)*.03,pg=ponyGeo([V(dx*.19,.12,dz*.19),V(dx*.25,.0,dz*.25),V(dx*.27,-.12-e,dz*.27),V(dx*.27,-.22-e*1.5,dz*.27)],.5);hd.add(mesh(pg.g,ha))}}
+else if(hs=='afro'){hd.add(sp(.29,ha,0,.14,-.06,1.02,.85,.88))}
+else if(hs=='ponytail'){const pg=ponyGeo([V(0,.2,-.16),V(0,.3,-.24),V(0,.27,-.35),V(0,.12,-.4),V(0,-.04,-.38)],1.1);hd.add(mesh(pg.g,ha));const e=pg.cv.getPoint(1);hd.add(sp(.03,ha,e.x,e.y,e.z));const tp=pg.cv.getPoint(.08),tg=pg.cv.getTangent(.08),tie=mesh(new TO(.07,.02,10,24),dc(L.hair,-.18),tp.x,tp.y,tp.z);tie.quaternion.setFromUnitVectors(V(0,0,1),tg);hd.add(tie)}
+else if(hs=='braid'){const rb=cm('#ff6f9c');for(let i=0;i<9;i++)hd.add(sp(.05-i*.0025,ha,(i%2?.013:-.013),.06-i*.062,-.2-.012*i,1,.8,1));hd.add(sp(.03,rb,0,.06-8*.062,-.3),sp(.032,rb,-.05,.09,-.2,1.5,.8,.6),sp(.032,rb,.05,.09,-.2,1.5,.8,.6),sp(.02,rb,0,.09,-.2))}
+else if(hs=='samurai'){const c=mesh(new THREE.ConeGeometry(.032,.15,12),ha,0,.37,-.09);c.rotation.x=-1;hd.add(sp(.075,ha,0,.28,-.04,1,1.1,.9),ring(.07,.014,dc(L.hair,-.2),0,.215,-.03),c)}
+else if(hs=='undercut'){const c=sp(.14,ha,0,.16,.045,1.12,.6,1.25);c.rotation.x=-.12;hd.add(c)}
+else if(hs=='mohawk'){for(let i=0;i<8;i++){const a=-1.9+i*.4,d=V(0,Math.cos(a),Math.sin(a)),hh=.12+.1*Math.cos((i-3.5)*.35),c=mesh(new THREE.ConeGeometry(.05,hh,12),ha,d.x*(.19+hh/2),d.y*(.19+hh/2),d.z*(.19+hh/2));c.quaternion.setFromUnitVectors(V(0,1,0),d);hd.add(c)}}
+else if(hs=='langsutan'){hd.add(sp(.2,ha,0,-.1,-.09,1.12,1.45,.78),sp(.085,ha,-.2,-.06,.02,.55,1.5,.9),sp(.085,ha,.2,-.06,.02,.55,1.5,.9),sp(.07,ha,-.13,.12,.15,1.4,.5,.6),sp(.07,ha,.13,.12,.15,1.4,.5,.6))}
 const bl=blob(.9,.9,.5);G.add(bl);G.userData={legL,legR,armL,armR,body,hd,eyes,hl,blob:bl,smile:smg,mo,brows};return G}
 const NPS={Budi:{hs:'cepak',ts:'lengan',bs:'panjang',ss:'bot'},Sari:{hs:'bob',ts:'sweater',bs:'rok',ss:'formal'},'Pak Joko':{hs:'cepak',ts:'jaket',bs:'panjang',ss:'formal'},Mei:{hs:'cepol',ts:'kaos',bs:'pendek',ss:'sneaker'},Rina:{hs:'panjang',ts:'hoodie',bs:'jeans',ss:'hightop'},Dodi:{hs:'jabrik',ts:'tanktop',bs:'pendek',ss:'sneaker'},'Bu Tini':{hs:'cepol',ts:'lengan',bs:'rokpanjang',ss:'sandal'},Kevin:{hs:'keriting',ts:'hoodie',bs:'panjang',ss:'hightop'}};
 // ===== kota =====
