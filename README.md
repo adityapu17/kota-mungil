@@ -31,3 +31,10 @@ Password di-hash PBKDF2-SHA256 (100k iterasi + salt) di server; tidak pernah dis
 
 ## Arcade & peringkat
 Game di Arcade (Tetris, Mungil Run, Flappy Mungil, Space Mungil, Mungil Racing) bisa dimainkan layar penuh. Skor terbaik tiap pemain disimpan di tabel `scores` (dibuat otomatis oleh Function; `schema.sql` juga sudah berisi tabelnya). Tanpa D1, peringkat hanya tersimpan di perangkat ini.
+
+## Performa & kualitas grafis
+Game mendeteksi perangkat saat dibuka dan memilih preset **Rendah / Sedang / Tinggi** otomatis (bisa diganti manual di Menu → 🎚️ Grafis, tersimpan di browser).
+- **Rendah**: resolusi 1x, tanpa bayangan matahari (karakter pakai bayangan bulat), maks 30 FPS, model karakter ringan.
+- **Sedang**: resolusi 1.25x, bayangan 1024, model karakter ringan.
+- **Tinggi**: tampilan penuh seperti sebelumnya.
+Di semua preset, resolusi render turun otomatis kalau FPS jatuh dan naik lagi kalau sudah lancar. Anti-alias dan detail model berlaku setelah muat ulang halaman.
