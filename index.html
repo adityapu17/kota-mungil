@@ -240,7 +240,7 @@ else if(p=='batik'){x.strokeStyle='rgba(70,35,10,.6)';x.lineWidth=3;for(let i=0;
 else if(p=='gucci'){x.fillStyle='#1f6b3a';x.fillRect(38,0,16,128);x.fillRect(74,0,16,128);x.fillStyle='#b3262d';x.fillRect(54,0,20,128)}
 const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(3,2);t.encoding=THREE.sRGBEncoding;return PTC[k]=t}
 let DET=1;const HGC={};function hairGeo(sty){const k=sty+DET;return HGC[k]||(HGC[k]=hairGeo0(sty))}
-function hairGeo0(sty){const P=HSP[sty]||HSP.pendek,fem=P.fem,rad=P.rad||1,ak=(P.amp===undefined?1:P.amp)*.55,g=new THREE.SphereGeometry(1,DET?112:56,DET?72:36),p=g.attributes.position,v=new THREE.Vector3();
+function hairGeo0(sty){const P=HSP[sty]||HSP.pendek,fem=P.fem,rad=P.rad||1,ak=(P.amp===undefined?1:P.amp)*.55,g=new THREE.SphereGeometry(1,DET>1?112:DET?72:56,DET>1?72:DET?46:36),p=g.attributes.position,v=new THREE.Vector3();
 let BM;if(P.bm=='c'){BM=[];for(let i=0;i<34;i++){const y=-.25+1.25*((i*.618)%1),a=i*2.399,r=Math.sqrt(Math.max(0,1-y*y));BM.push([Math.cos(a)*r,y,Math.sin(a)*r,.2,.3])}}
 else BM=P.bm=='f'?[[-.3,.9,.1,.22,.4],[.3,.9,0,.2,.4],[-.6,.7,.4,.12,.4],[-.42,.45,.88,.24,.3],[.18,.55,.85,.11,.3],[0,.55,-.85,.12,.6]]:[[-.7,.7,.1,.26,.3],[-.3,.93,.05,.3,.3],[.15,.97,.05,.3,.3],[.6,.78,.1,.26,.3],[-.4,.4,.9,.2,.25],[.35,.5,.85,.16,.28],[.97,.15,0,.12,.42],[-.97,.15,0,.12,.42],[0,.5,-.85,.15,.6]];
 const ss=(a,b,x)=>{x=Math.min(1,Math.max(0,(x-a)/(b-a)));return x*x*(3-2*x)};
@@ -250,17 +250,17 @@ const k=ss(hl-.16,hl+.03,d.y);let b=0;
 BM.forEach(m=>{const ang=Math.acos(Math.min(1,(d.x*m[0]+d.y*m[1]+d.z*m[2])/Math.hypot(m[0],m[1],m[2])));b+=m[3]*Math.exp(-Math.pow(ang/m[4],2))});
 const f=.5+(.5+b*ak)*k;p.setXYZ(i,d.x*.232*rad*f,d.y*.248*rad*f,d.z*.232*rad*f)}
 g.computeVertexNormals();return g}
-function ponyGeo(pts,k,tp){const cv=new THREE.CatmullRomCurve3(pts),ts=DET?36:20,rs=DET?18:10,g=new THREE.TubeGeometry(cv,ts,1,rs,false),p=g.attributes.position,c=new THREE.Vector3(),v=new THREE.Vector3();k=k||1;
+function ponyGeo(pts,k,tp){const cv=new THREE.CatmullRomCurve3(pts),ts=DET>1?36:DET?28:20,rs=DET>1?18:DET?14:10,g=new THREE.TubeGeometry(cv,ts,1,rs,false),p=g.attributes.position,c=new THREE.Vector3(),v=new THREE.Vector3();k=k||1;
 for(let i=0;i<=ts;i++){const t=i/ts,r=k*(.06+.04*Math.sin(Math.PI*Math.pow(t,.6))-.03*t);cv.getPointAt(t,c);for(let j=0;j<=rs;j++){const n=i*(rs+1)+j;v.fromBufferAttribute(p,n);p.setXYZ(n,c.x+(v.x-c.x)*r,c.y+(v.y-c.y)*r,c.z+(v.z-c.z)*r)}}
 g.computeVertexNormals();return{g,cv}}
 const PONY=[V(.06,.17,-.16),V(.16,.27,-.19),V(.26,.22,-.19),V(.3,.05,-.15),V(.3,-.14,-.11),V(.28,-.22,-.09)];
-function makeChar(L,hi){DET=hi||QL.det?1:0;const fem=L.g=='f',hs=L.hs||(fem?'kuncir':'pendek'),ts=L.ts||(fem?'hoodie':'kaos'),bs=L.bs||(fem?'jeans':'panjang'),ss=L.ss||'sneaker',T_=TP[ts]||TP.kaos,B_=BP[bs]||BP.panjang;
+function makeChar(L,hi){DET=hi?2:QL.det?1:0;const fem=L.g=='f',hs=L.hs||(fem?'kuncir':'pendek'),ts=L.ts||(fem?'hoodie':'kaos'),bs=L.bs||(fem?'jeans':'panjang'),ss=L.ss||'sneaker',T_=TP[ts]||TP.kaos,B_=BP[bs]||BP.panjang;
 const G=new THREE.Group(),body=new THREE.Group();G.add(body);const HIP=.44,SH=.8,HD=1.07;
 const cm=(c,o)=>M(c,{roughness:.62,...o}),sk=cm(L.skin),sh=cm(L.shirt),pa=cm(L.pants),so=cm(L.shoes),ha=cm(L.hair,{roughness:.55}),dk=cm('#14100f',{roughness:.25}),wh=cm('#f4f4f6'),
 dc=(c,v)=>cm(new THREE.Color(c).offsetHSL(0,0,v)),Q=THREE.SphereGeometry,Y=THREE.CylinderGeometry,TO=THREE.TorusGeometry;
-const sp=(r,m,x,y,z,sx=1,sy=1,sz=1)=>{const o=mesh(new Q(r,DET?32:14,DET?20:10),m,x,y,z);o.scale.set(sx,sy,sz);return o};
-const lathe=(pts,m,sz)=>{if(pts[0][1]>pts[pts.length-1][1])pts=pts.slice().reverse();const o=mesh(new THREE.LatheGeometry(new THREE.SplineCurve(pts.map(a=>new THREE.Vector2(a[0],a[1]))).getPoints(DET?56:24),DET?44:18),m);o.scale.z=sz;return o};
-const limb=(pts,cf)=>{if(pts[0][1]>pts[pts.length-1][1])pts=pts.slice().reverse();const g=new THREE.LatheGeometry(new THREE.SplineCurve(pts.map(a=>new THREE.Vector2(a[0],a[1]))).getPoints(DET?80:32),DET?56:24),p=g.attributes.position,col=new Float32Array(p.count*3),c=new THREE.Color();for(let i=0;i<p.count;i++){cf(p.getY(i),c,p.getX(i),p.getZ(i));c.convertSRGBToLinear();col[i*3]=c.r;col[i*3+1]=c.g;col[i*3+2]=c.b}g.setAttribute('color',new THREE.BufferAttribute(col,3));const o=new THREE.Mesh(g,new THREE.MeshStandardMaterial({vertexColors:true,roughness:.62,metalness:0}));o.castShadow=o.receiveShadow=true;return o};
+const sp=(r,m,x,y,z,sx=1,sy=1,sz=1)=>{const o=mesh(new Q(r,DET>1?32:DET?22:14,DET>1?20:DET?14:10),m,x,y,z);o.scale.set(sx,sy,sz);return o};
+const lathe=(pts,m,sz)=>{if(pts[0][1]>pts[pts.length-1][1])pts=pts.slice().reverse();const o=mesh(new THREE.LatheGeometry(new THREE.SplineCurve(pts.map(a=>new THREE.Vector2(a[0],a[1]))).getPoints(DET>1?56:DET?36:24),DET>1?44:DET?28:18),m);o.scale.z=sz;return o};
+const limb=(pts,cf)=>{if(pts[0][1]>pts[pts.length-1][1])pts=pts.slice().reverse();const g=new THREE.LatheGeometry(new THREE.SplineCurve(pts.map(a=>new THREE.Vector2(a[0],a[1]))).getPoints(DET>1?80:DET?48:32),DET>1?56:DET?36:24),p=g.attributes.position,col=new Float32Array(p.count*3),c=new THREE.Color();for(let i=0;i<p.count;i++){cf(p.getY(i),c,p.getX(i),p.getZ(i));c.convertSRGBToLinear();col[i*3]=c.r;col[i*3+1]=c.g;col[i*3+2]=c.b}g.setAttribute('color',new THREE.BufferAttribute(col,3));const o=new THREE.Mesh(g,new THREE.MeshStandardMaterial({vertexColors:true,roughness:.62,metalness:0}));o.castShadow=o.receiveShadow=true;return o};
 const PC=new THREE.Color(L.pants),SOC=new THREE.Color(L.shoes),SK=new THREE.Color(L.skin),SC=new THREE.Color(L.shirt),CU=new THREE.Color(L.pants).offsetHSL(0,0,.09),band=(y0,w)=>(y,c)=>{const t=Math.min(1,Math.max(0,(y-y0)/w+.5));c.copy(SK).lerp(SC,t)},all=col=>(y,c)=>c.copy(col);
 const ring=(r,t,m,x,y,z)=>{const o=mesh(new TO(r,t,12,40),m,x,y,z);o.rotation.x=Math.PI/2;return o};
 const scp=(pts,k)=>pts.map(a=>[a[0]*k,a[1]]);
@@ -334,7 +334,7 @@ else if(hs=='samurai'){const c=mesh(new THREE.ConeGeometry(.032,.15,12),ha,0,.37
 else if(hs=='undercut'){const c=sp(.14,ha,0,.16,.045,1.12,.6,1.25);c.rotation.x=-.12;hd.add(c)}
 else if(hs=='mohawk'){for(let i=0;i<8;i++){const a=-1.9+i*.4,d=V(0,Math.cos(a),Math.sin(a)),hh=.12+.1*Math.cos((i-3.5)*.35),c=mesh(new THREE.ConeGeometry(.05,hh,12),ha,d.x*(.19+hh/2),d.y*(.19+hh/2),d.z*(.19+hh/2));c.quaternion.setFromUnitVectors(V(0,1,0),d);hd.add(c,sp(.05,ha,d.x*.2,d.y*.2,d.z*.2))}}
 else if(hs=='langsutan'){hd.add(sp(.2,ha,0,-.1,-.09,1.12,1.45,.78),sp(.085,ha,-.2,-.06,.02,.55,1.5,.9),sp(.085,ha,.2,-.06,.02,.55,1.5,.9),sp(.07,ha,-.13,.12,.15,1.4,.5,.6),sp(.07,ha,.13,.12,.15,1.4,.5,.6))}
-if(!DET)G.traverse(o=>{if(o.isMesh){const ge=o.geometry;if(!ge.boundingSphere)ge.computeBoundingSphere();if(ge.boundingSphere.radius*Math.max(o.scale.x,o.scale.y,o.scale.z)<.05)o.castShadow=false}});const bl=blob(.9,.9,.5);G.add(bl);G.userData={legL,legR,armL,armR,body,hd,eyes,hl,blob:bl,smile:smg,mo,brows};return G}
+if(DET<2)G.traverse(o=>{if(o.isMesh){const ge=o.geometry;if(!ge.boundingSphere)ge.computeBoundingSphere();if(ge.boundingSphere.radius*Math.max(o.scale.x,o.scale.y,o.scale.z)<.05)o.castShadow=false}});const bl=blob(.9,.9,.5);G.add(bl);G.userData={legL,legR,armL,armR,body,hd,eyes,hl,blob:bl,smile:smg,mo,brows};return G}
 const NPS={Budi:{hs:'cepak',ts:'lengan',bs:'panjang',ss:'bot'},Sari:{hs:'bob',ts:'sweater',bs:'rok',ss:'formal'},'Pak Joko':{hs:'cepak',ts:'jaket',bs:'panjang',ss:'formal'},Mei:{hs:'cepol',ts:'kaos',bs:'pendek',ss:'sneaker'},Rina:{hs:'panjang',ts:'hoodie',bs:'jeans',ss:'hightop'},Dodi:{hs:'jabrik',ts:'tanktop',bs:'pendek',ss:'sneaker'},'Bu Tini':{hs:'cepol',ts:'lengan',bs:'rokpanjang',ss:'sandal'},Kevin:{hs:'keriting',ts:'hoodie',bs:'panjang',ss:'hightop'}};
 // ===== kota =====
 const town=new THREE.Group();sc.add(town);
