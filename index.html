@@ -39,7 +39,8 @@ button:disabled{background:#c9cfd0;color:#888}
 #go{background:#f0a04b;font-size:1.2em;padding:.5em 1.6em;border-radius:2em}
 #bgc{position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#d3e9e4 50%,#e6e6ec 50%)}
 #g{isolation:isolate}
-#mmw{left:.6em;bottom:.6em;padding:.3em}#mm{width:12em;height:auto;display:block;border-radius:.4em}
+#mmw{left:.6em;bottom:.6em;padding:.3em}
+#xb{right:.6em;bottom:.6em;z-index:5;border:0;cursor:pointer;font-weight:700;font-size:1em;padding:.5em 1em;background:#e8626a;color:#fff}#mm{width:12em;height:auto;display:block;border-radius:.4em}
 #vg{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 60%,rgba(15,25,35,.2) 100%)}
 #fd{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity .28s;z-index:5}
 #md.bar{top:auto;bottom:.5em;transform:translateX(-50%);width:auto;min-width:40%;max-width:74%;padding:.35em .55em;border-radius:.9em;font-size:.8em;max-height:36%;overflow:auto}#md.bar h3{font-size:1em;margin:0 0 .25em}.bar .gr{grid-template-columns:repeat(4,minmax(5.2em,1fr));gap:.28em;margin-bottom:.25em}#md.bar .gr button{padding:.28em .3em;font-size:.92em;border-radius:.7em;line-height:1.15}#md.bar .gr small{font-size:.78em}#md.bar #x,#md.bar #xc{padding:.22em .9em;font-size:.92em}#md.bar p{margin:.15em 0;font-size:.95em}
@@ -97,7 +98,7 @@ button:disabled{background:#c9cfd0;color:#888}
 @media(orientation:portrait){#rot{display:flex}}
 </style></head><body>
 <div id="g"><div id="bgc"></div><canvas id="cv"></canvas><div id="vg"></div>
-<div id="hud" hidden><div class="p" id="nd"></div><div class="p" id="tm"></div><div class="p" id="mw"><span id="mo"></span></div><div class="p" id="mn"><button id="sp">⏩</button><button id="zm">🔍</button><button id="mu">🔊</button><button id="fsb" title="Layar penuh (F)">⛶</button><button id="mb">☰</button></div><div class="p" id="mmw"><canvas id="mm" width="204" height="150"></canvas></div></div>
+<div id="hud" hidden><div class="p" id="nd"></div><div class="p" id="tm"></div><div class="p" id="mw"><span id="mo"></span></div><div class="p" id="mn"><button id="sp">⏩</button><button id="zm">🔍</button><button id="mu">🔊</button><button id="fsb" title="Layar penuh (F)">⛶</button><button id="mb">☰</button></div><div class="p" id="mmw"><canvas id="mm" width="204" height="150"></canvas></div><button class="p" id="xb" hidden>🚪 Keluar</button></div>
 <div id="toast"></div><div id="hint" hidden></div><div id="fd"></div>
 <div id="fm" hidden><div class="fh"><b>🗺️ Peta Kota</b><small> tap bangunan untuk menuju ke sana · tekan M untuk menutup</small><button id="fx">✕</button></div><canvas id="fmc"></canvas></div>
 <div id="spl"><div class="top"></div><div class="bot"><div id="sbl">Memuat Data…</div><div id="sbar"><i></i></div><div id="sbt" hidden><button id="bn">▶ Game Baru</button><button id="bl">📂 Lanjutkan</button></div></div><button id="fss" title="Layar penuh">⛶</button><div id="fsn" hidden></div><div class="ver">v1.0</div>
@@ -203,16 +204,16 @@ let L={...DEF.m},mode='cr',modal=0,cur=null,mult=1,tt=0;
 let S={look:L,money:200,t:6*60,day:0,w:'cerah',wl:200,nd:{k:80,e:90,s:80,b:90}};
 // ===== 3D setup =====
 // --- kualitas grafis: auto-deteksi perangkat + bisa diganti di Menu ---
-const QPRE={low:{pr:1,aa:0,sh:0,sm:512,fps:30,det:0},mid:{pr:1.25,aa:0,sh:1,sm:1024,fps:60,det:0},high:{pr:2,aa:1,sh:1,sm:2048,fps:60,det:1}};
+const QPRE={low:{pr:1,aa:0,sh:0,sm:512,fps:30,det:0},mid:{pr:1.5,aa:1,sh:1,sm:1024,fps:60,det:1},high:{pr:2,aa:1,sh:1,sm:2048,fps:60,det:1}};
 let QPREF='auto';try{QPREF=localStorage.getItem('km_q')||'auto'}catch(_){}
 function detectQ(){const ua=navigator.userAgent,mob=/Android|iPhone|iPad|iPod|Mobi/i.test(ua),cores=navigator.hardwareConcurrency||4,mem=navigator.deviceMemory||4;let gpu='';
 try{const c=document.createElement('canvas'),gl=c.getContext('webgl')||c.getContext('experimental-webgl');if(gl){const e=gl.getExtension('WEBGL_debug_renderer_info');if(e)gpu=gl.getParameter(e.UNMASKED_RENDERER_WEBGL)||'';const l=gl.getExtension('WEBGL_lose_context');l&&l.loseContext()}}catch(_){}
 const weak=/SwiftShader|llvmpipe|Software|Mali-4|Mali-T|Mali-G(31|51|52)|Adreno \(TM\) ?[2-5]\d\d|PowerVR|VideoCore/i.test(gpu);
 const ios=/iPhone|iPad|iPod/.test(ua)||(navigator.platform=='MacIntel'&&navigator.maxTouchPoints>1);
-if(weak||mem<=2||(mob&&!ios&&(cores<=4||mem<=3)))return'low';if(ios||mob||cores<=6||mem<=4)return'mid';return'high'}
+if(weak||mem<=2||(mob&&!ios&&(cores<=4||mem<=3)))return'low';if(mob&&!ios&&cores>=8&&mem>=8)return'high';if(ios||mob||cores<=6||mem<=4)return'mid';return'high'}
 const QAUTO=detectQ(),qName=()=>QPREF=='auto'?QAUTO:QPREF;let QT=qName(),QL=QPRE[QT],RSC=1;
 const R=new THREE.WebGLRenderer({canvas:cv,antialias:!!QL.aa,alpha:true,powerPreference:'high-performance'});R.setPixelRatio(Math.min(devicePixelRatio,QL.pr)*RSC);R.shadowMap.enabled=true;R.shadowMap.type=QL.sh&&QL.det?THREE.PCFSoftShadowMap:THREE.PCFShadowMap;R.outputEncoding=THREE.sRGBEncoding;R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=1;
-const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(40,W/H,.1,200),V=(x,y,z)=>new THREE.Vector3(x,y,z);
+const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(40,16/9,.1,200),V=(x,y,z)=>new THREE.Vector3(x,y,z);
 sc.background=null;sc.fog=new THREE.Fog('#bfe6f5',500,600);
 const amb=new THREE.AmbientLight('#ffffff',.18),hemi=new THREE.HemisphereLight('#ffffff','#a9c4bd',.6),sun=new THREE.DirectionalLight('#fff4e0',1.25),rim=new THREE.DirectionalLight('#cfe6ff',.4);
 sun.castShadow=!!QL.sh;sun.shadow.mapSize.set(QL.sm,QL.sm);Object.assign(sun.shadow.camera,{left:-16,right:16,top:16,bottom:-16,near:1,far:70});sun.shadow.bias=-.0006;
@@ -223,7 +224,7 @@ function cycleQ(){const o=['auto','low','mid','high'];QPREF=o[(o.indexOf(QPREF)+
 // resolusi dinamis: turunkan resolusi render kalau frame lambat, naikkan lagi kalau lancar
 let ftA=0,ftN=0,lastDown=0;
 function adaptRes(raw){if(raw>250||raw<4||gmOpen||document.hidden)return;ftA=ftA?ftA+(raw-ftA)*.08:raw;if(++ftN<90)return;ftN=0;const tgt=1000/QL.fps,now=performance.now();let n=RSC;
-if(ftA>tgt*1.4&&RSC>.55){n=Math.max(.55,RSC-.12);lastDown=now}else if(ftA<tgt*1.12&&RSC<1&&now-lastDown>15000)n=Math.min(1,RSC+.06);
+if(ftA>tgt*1.4&&RSC>.75){n=Math.max(.75,RSC-.1);lastDown=now}else if(ftA<tgt*1.12&&RSC<1&&now-lastDown>15000)n=Math.min(1,RSC+.06);
 if(n!==RSC){RSC=n;R.setPixelRatio(Math.min(devicePixelRatio,QL.pr)*RSC);fit()}}
 const M=(c,o={})=>{if(o.emissive)o={...o,emissive:new THREE.Color(o.emissive).convertSRGBToLinear()};return new THREE.MeshStandardMaterial({color:new THREE.Color(c).convertSRGBToLinear(),roughness:.8,metalness:0,...o})};
 function mesh(ge,m,x=0,y=0,z=0){const o=new THREE.Mesh(ge,m);o.position.set(x,y,z);o.castShadow=o.receiveShadow=true;return o}
@@ -644,6 +645,9 @@ function buildRoom(b){const g=new THREE.Group(),th=RT[b.k]||RT.rumah;g.position.
 for(let i=-4;i<=4;i++)if(i%2)bx(g,.9,.004,7.2,th[1],i,.002,0).castShadow=false;
 rb(g,9.4,3.4,.25,th[2],0,1.7,-3.6,.03);rb(g,.25,3.4,7.4,th[2],-4.7,1.7,0,.03);bx(g,9.4,.18,.05,'#fff',0,.09,-3.45);bx(g,.05,.18,7.4,'#fff',-4.55,.09,0);
 iw(g,-2.3,2.1,-3.46,1.2,1.2);iw(g,2.4,2.1,-3.46,1.2,1.2);iw(g,-4.56,2.1,.8,1.2,1.2,Math.PI/2);
+{const ed=new THREE.Group();ed.position.set(0,0,-3.46);ed.userData.exit=1;bx(ed,1.5,2.5,.08,'#fff',0,1.25,0);bx(ed,1.2,2.3,.1,'#9a6b43',0,1.15,.02);bx(ed,.1,.1,.08,'#f2c84b',.4,1.1,.08);
+const c=document.createElement('canvas');c.width=256;c.height=64;const x=c.getContext('2d');x.fillStyle='#e8626a';x.beginPath();x.roundRect(2,2,252,60,16);x.fill();x.fillStyle='#fff';x.font='bold 36px system-ui';x.textAlign='center';x.textBaseline='middle';x.fillText('🚪 KELUAR',128,34);
+const sg=new THREE.Mesh(new THREE.PlaneGeometry(1.3,.33),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c)}));sg.position.set(0,2.75,.02);ed.add(sg);g.add(ed);g.userData.door=ed}
 (IN[b.k]||IN.rumah)(g,b);const pl=new THREE.PointLight('#ffe9c4',.7,18);pl.position.set(0,3,.5);g.add(pl);g.visible=false;sc.add(g);return g}
 // ===== alur masuk gedung, pekerjaan NPC, minimap =====
 const JOBS={Budi:{b:'kebun',k:['harvest','water'],h:[7,16],o:[-1,0]},'Pak Joko':{b:'danau',k:['fish'],h:[8,17],o:[1,1]},'Bu Tini':{b:'pasar',k:['shop'],h:[5,14],o:[0,0]},Rina:{b:'taman',k:['relax'],h:[10,18],o:[-2,0]},Sari:{b:'taman',k:['read'],h:[9,16],o:[2,1]},Dodi:{b:'pantai',k:['lift'],h:[6,17],o:[-3,0]},Mei:{b:'kafe',in:1,k:['cook'],h:[7,17]},Kevin:{b:'arcade',in:1,k:['play'],h:[10,24]}};
@@ -694,11 +698,12 @@ x.fillStyle='#2d3b3a';x.textAlign='center';lines.forEach((l,i)=>x.fillText(l,256
 const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;const s=new THREE.Sprite(new THREE.SpriteMaterial({map:t,transparent:true,depthTest:false}));s.renderOrder=20;s.scale.set(scl,scl*320/512,1);s.center.set(.5,0);s.position.y=yb;g.add(s);u.bub={s,t:ms/1000}}
 function tickBub(g,dt){const u=g.userData,b=u.bub;if(b){b.t-=dt;if(b.t<=0){g.remove(b.s);b.s.material.map.dispose();b.s.material.dispose();u.bub=null}}}
 function tap(cx,cy){if(!inside)md.hidden=true;const r=cv.getBoundingClientRect();mo.set((cx-r.left)/r.width*2-1,-(cy-r.top)/r.height*2+1);ray.setFromCamera(mo,cam);
-const pk=inside?NP.filter(n=>n.int).map(n=>n.g):[...bg,...HG,...NP.filter(n=>!n.in).map(n=>n.g),...AM.map(a=>a.g)],h=ray.intersectObjects(pk,true);
-if(h.length){let o=h[0].object;while(o&&!o.userData.n&&!o.userData.b&&!o.userData.hz&&!o.userData.an)o=o.parent;
+const pk=inside?[...NP.filter(n=>n.int).map(n=>n.g),...(INTG&&INTG.userData.door?[INTG.userData.door]:[])]:[...bg,...HG,...NP.filter(n=>!n.in).map(n=>n.g),...AM.map(a=>a.g)],h=ray.intersectObjects(pk,true);
+if(h.length){let o=h[0].object;while(o&&!o.userData.n&&!o.userData.b&&!o.userData.hz&&!o.userData.an&&!o.userData.exit)o=o.parent;
 if(o&&o.userData.n){const n=o.userData.n;if(inside){P.p=[[n.x,n.y+.9]];P.arrive=()=>npcMenu(n)}else walkTo(Math.round(n.x),Math.round(n.y),()=>npcMenu(n));return}
 if(o&&o.userData.an){const a=o.userData.an;walkTo(Math.round(a.x),Math.round(a.y),()=>animalTap(a));return}
 if(o&&o.userData.hz){toast('Rumah warga 🏡 — pemiliknya sedang keluar');return}
+if(o&&o.userData.exit){P.p=[[INX-.5,INZ-2.4]];P.arrive=()=>exitInside();SFX.pop();return}
 if(o&&o.userData.b){const b=o.userData.b;walkTo(b.d[0],b.d[1],()=>enter(b));return}}
 const pt=V(0,0,0);if(ray.ray.intersectPlane(pl,pt)){if(inside){P.p=[[Math.max(INX-3.7,Math.min(INX+3.7,pt.x))-.5,Math.max(INZ-1.9,Math.min(INZ+2.9,pt.z))-.5]];P.arrive=null;SFX.pop()}else walkTo(Math.floor(pt.x),Math.floor(pt.z))}}
 cv.onpointerdown=e=>{dn={x:e.clientX,y:e.clientY,m:0};cv.setPointerCapture(e.pointerId);AC&&AC.resume()};
@@ -854,10 +859,10 @@ const sp=P.sp*(KS.shift?1.7:1)*(P.slow?.6:1)*dt,nx=P.x+dx*sp,ny=P.y+dz*sp,ok=(x,
 if(ok(nx,ny)){P.x=nx;P.y=ny}else if(ok(nx,P.y))P.x=nx;else if(ok(P.x,ny))P.y=ny;else return;P.ang=Math.atan2(dx,dz);P.mv=1}
 function nearTarget(){if(busy||talk||pet||fight||lieP||trans||!mnu.hidden||mode!='play')return null;let best=null,bd=1e9;
 NP.forEach(n=>{if(n.in&&!n.int)return;const d=Math.hypot(P.x-n.x,P.y-n.y);if(d<2.4&&d<bd){bd=d;best={t:'npc',n,label:'E · Ngobrol dengan '+n.n}}});
-if(inside)return best;
+if(inside){const dd=Math.hypot(P.x-(INX-.5),P.y-(INZ-4));if(dd<2.6&&dd<bd)best={t:'exit',label:'E · Keluar 🚪'};return best}
 AM.forEach(a=>{const d=Math.hypot(P.x-a.x,P.y-a.y);if(d<2&&d<bd){bd=d;best={t:'an',a,label:a.st&&a.st!='wild'?'E · '+a.name+(a.hungry?' (lapar! kasih makan)':' (peliharaanmu)'):'E · '+a.act}}});
 B.forEach(b=>{if(b.free){if(P.x>=b.x-.5&&P.x<=b.x+b.fw-.5&&P.y>=b.y-.5&&P.y<=b.y+b.fh-.5&&bd>.5){bd=.5;best={t:'area',b,label:'E · Aktivitas di '+b.n}}}else{const d=Math.hypot(P.x-b.d[0],P.y-b.d[1]);if(d<1.8&&d<bd){bd=d;best={t:'b',b,label:'E · Masuk '+b.n}}}});return best}
-function interact(){const t=nearTarget();if(!t)return;if(t.t=='npc')npcMenu(t.n);else if(t.t=='an')animalTap(t.a);else if(t.t=='area'){cur=t.b;menu()}else enter(t.b)}
+function interact(){const t=nearTarget();if(!t)return;if(t.t=='npc')npcMenu(t.n);else if(t.t=='an')animalTap(t.a);else if(t.t=='area'){cur=t.b;menu()}else if(t.t=='exit')exitInside();else enter(t.b)}
 hintEl.onclick=interact;
 function drawMap(c,s,lab,part){if(part!=2){c.fillStyle='#8fcf7e';c.fillRect(0,0,W*s,H*s);if(lab){c.fillStyle='#6fb868';TR.forEach(([x,y])=>c.fillRect(x*s,y*s,s,s))}
 c.fillStyle='#f1dfa8';c.beginPath();c.moveTo(0,H*s);for(let x=0;x<=W;x+=2)c.lineTo(x*s,(SHORE(x)-3.6)*s);c.lineTo(W*s,H*s);c.fill();
@@ -1188,13 +1193,14 @@ pg=makeChar(S.look);pg.scale.setScalar(.85);$('#bgc').hidden=true;const ar=mesh(
 SFX.start();try{screen.orientation.lock('landscape').catch(()=>{})}catch(e){}toast('Tap bangunan untuk masuk, tap warga untuk ngobrol, geser untuk putar kamera 👋')}
 $('#sp').onclick=()=>{mult=mult==1?4:1;$('#sp').style.background=mult>1?'#f0a04b':'';SFX.pop()};
 
+$('#xb').onclick=()=>exitInside();
 $('#mu').onclick=()=>{muted=!muted;$('#mu').textContent=muted?'🔇':'🔊';if(MU.on&&MU.master)MU.master.gain.setTargetAtTime(muted?0:.9,AC.currentTime,.05)};addEventListener('pointerdown',()=>muInit(),{once:true});addEventListener('keydown',()=>muInit(),{once:true});document.addEventListener('visibilitychange',()=>{if(AC&&MU.on){document.hidden?AC.suspend():AC.resume()}});
 $('#nd').innerHTML=[['🍚','k'],['⚡','e'],['😊','s'],['🫧','b']].map(([e,k])=>`<div class="nb">${e}<u><i id="n${k}"></i></u></div>`).join('');
 const mc=$('#mm').getContext('2d');
 let MMC=null,MMK='';function mini(){const k=B.map(b=>b.op?1:0).join('');if(!MMC||MMK!==k){MMK=k;MMC=MMC||document.createElement('canvas');MMC.width=W*3;MMC.height=H*3;drawMap(MMC.getContext('2d'),3,false,1)}mc.drawImage(MMC,0,0);drawMap(mc,3,false,2)}
 function hud(){if(inside&&!busy&&!trans&&!lieP&&!isOpen(inside)){toast(`${inside.n} sudah tutup 🚪`);exitInside()}const h=S.t/60|0,m=S.t%60,ni=h<6||h>=19;$('#tm').textContent=`${DN[S.day%7]} ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} ${S.w=='cerah'?(ni?'🌙':'☀️'):S.w=='mendung'?'☁️':'🌧️'}`;$('#mo').textContent='💰 Rp'+fm(S.money)+' 🧠'+(S.skill||0);mini();
 for(const k in S.nd){const v=S.nd[k],i=$('#n'+k);i.style.width=v+'%';i.style.background=v>50?'#6fcf7a':v>25?'#f0c040':'#e8626a'}
-B.forEach(b=>{const o=isOpen(b);if(o!==b.op){b.op=o;signDraw(b)}});const ht=nearTarget();hintEl.hidden=!ht||!md.hidden||!fmo.hidden;if(ht)hintEl.textContent=ht.label}
+B.forEach(b=>{const o=isOpen(b);if(o!==b.op){b.op=o;signDraw(b)}});$('#xb').hidden=!(inside&&!busy&&!trans&&!lieP&&!talk&&!pet&&!fight);const ht=nearTarget();hintEl.hidden=!ht||!md.hidden||!fmo.hidden;if(ht)hintEl.textContent=ht.label}
 // ===== visual =====
 const dark=h=>h<5||h>=20?.5:h<7?.5*(7-h)/2:h>=18?.5*(h-18)/2:0;
 const foc=V(12,.5,7);
@@ -1210,7 +1216,7 @@ function syncE(e,G,dt){G.position.set(e.x+.5,0,e.y+.5);const u=G.userData;e.nb=e
 if(e.ang!==undefined){let d=e.ang-G.rotation.y;d=Math.atan2(Math.sin(d),Math.cos(d));G.rotation.y+=d*Math.min(1,dt*12)}
 if(e.mv){e.ph=(e.ph||0)+dt*11;const s=Math.sin(e.ph);u.legL.rotation.x=s*.8;u.legR.rotation.x=-s*.8;u.armL.rotation.x=-s*.7;u.armR.rotation.x=s*.7;u.body.position.y=Math.abs(s)*.05}
 else{[u.legL,u.legR,u.armL,u.armR].forEach(o=>o.rotation.x*=.8);u.body.position.y*=.8}}
-function fit(){const a=W/H,w=innerWidth,h=innerHeight-(parseFloat(getComputedStyle(document.documentElement).paddingTop)||0);let cw=w,ch=w/a;if(ch>h){ch=h;cw=h*a}g.style.width=cw+'px';g.style.height=ch+'px';g.style.fontSize=ch/28+'px';R.setSize(cw,ch,false);cam.aspect=cw/ch;cam.updateProjectionMatrix()}
+function fit(){const a=16/9,w=innerWidth,h=innerHeight-(parseFloat(getComputedStyle(document.documentElement).paddingTop)||0);let cw=w,ch=w/a;if(ch>h){ch=h;cw=h*a}g.style.width=cw+'px';g.style.height=ch+'px';g.style.fontSize=ch/28+'px';R.setSize(cw,ch,false);cam.aspect=cw/ch;cam.updateProjectionMatrix()}
 addEventListener('resize',fit);fit();
 let last=0,acc=0,hT=0,sT=0,stT=0;
 function loop(ts){if(QL.fps<60&&ts-last<1000/QL.fps-3){requestAnimationFrame(loop);return}const raw=ts-last;adaptRes(raw);const dt=Math.min(.05,raw/1000||0);last=ts;tt+=dt;
